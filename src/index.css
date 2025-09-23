@@ -1,0 +1,193 @@
+.hero{
+  background-image: url("./assets/Hero-bg-image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: calc(100vh - 107px);
+  max-height: 679px;
+}
+
+.toggle-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  gap:50px;
+  background-color: white;
+}
+
+.toggle-input{
+  display: none;
+}
+.toggle-label{
+  width: 60px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-label:after{
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+.toggle-input:checked + .toggle-label{
+  background-color: #9747FF
+}
+.toggle-input:checked + .toggle-label::after{
+  transform: translateX(30px);
+}
+
+
+.toggle-containerFree{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15px;
+  gap:50px;
+  background-color: white;
+}
+
+.toggle-inputFree{
+  display: none;
+}
+.toggle-labelFree{
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-labelFree:after{
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 90%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+.toggle-inputFree:checked + .toggle-labelFree{
+  background-color: #9747FF
+}
+.toggle-inputFree:checked + .toggle-labelFree::after{
+  transform: translateX(20px);
+}
+
+
+.toggle-containerRegular{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15px;
+  gap:50px;
+  background-color: white;
+}
+
+.toggle-inputRegular{
+  display: none;
+}
+.toggle-labelRegular{
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-labelRegular::after{
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 90%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+.toggle-inputRegular:checked + .toggle-labelRegular{
+  background-color: #9747FF
+}
+.toggle-inputRegular:checked + .toggle-labelRegular::after{
+  transform: translateX(20px);
+}
+
+
+.toggle-containerVIP{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15px;
+  gap:50px;
+  background-color: white;
+}
+
+.toggle-inputVIP{
+  display: none;
+}
+.toggle-labelVIP{
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-labelVIP::after{
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 90%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+.toggle-inputVIP:checked + .toggle-labelVIP{
+  background-color: #9747FF
+}
+.toggle-inputVIP:checked + .toggle-labelVIP::after{
+  transform: translateX(20px);
+}
+
+.modal-contaier{
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.modal{
+  position: relative;
+  background-color: #0E021E;
+  width: 370px;
+  max-width: fit-content;
+  border-radius: 5px;
+  padding: 5px;
+}
