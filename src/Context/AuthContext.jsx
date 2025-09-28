@@ -8,13 +8,18 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+  const syncAuth = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    if (storedUser && storedToken) {
-      setUser(storedUser);
-      setToken(storedToken);
-    }
-  }, []);
+    setUser(storedUser || null);
+    setToken(storedToken || null);
+  };
+
+  syncAuth();
+  window.addEventListener("storage", syncAuth);
+  return () => window.removeEventListener("storage", syncAuth);
+}, []);
+
   
   const register = async (formData) => {
     try {
@@ -34,35 +39,62 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (formData) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+//   const login = async (formData) => {
+//   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signin`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(formData),
+//   });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Login failed");
+//   const data = await response.json();
+//   if (!response.ok) throw new Error(data.message || "Login failed");
 
-      setUser(data.user);
-      setToken(data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
-    } catch (error) {
-      console.error("Login Error:", error);
-      throw error;
-    }
-  };
+//   setUser(data.user);
+//   setToken(data.token);
 
+//   localStorage.setItem("user", JSON.stringify(data.user));
+//   localStorage.setItem("token", data.token);
+//   localStorage.setItem("userId", data.user._id || data.user.id);
+//   console.log("LocalStorage token:", localStorage.getItem("token"));
+//   console.log("LocalStorage user:", localStorage.getItem("user"));
+
+//   return data;
+// };
+
+const login = async (formData) => {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || "Login failed");
+
+  // Clear old session
+  localStorage.clear();
+  sessionStorage.clear();
+
+  // Save fresh session
+  setUser(data.user);
+  setToken(data.token);
+
+  localStorage.setItem("user", JSON.stringify(data.user));
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userId", data.user._id || data.user.id);
+
+  return data;
+};
 
   // Logout function
   const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-  };
+  setUser(null);
+  setToken(null);
+  localStorage.clear();
+  sessionStorage.clear();
+};
+
+
 
   return (
     <AuthContext.Provider value={{ user, token, login, register, logout }}>

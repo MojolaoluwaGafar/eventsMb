@@ -92,7 +92,7 @@ export default function EventPreview({ formData, photo, onEdit, onSubmit, isLoad
             {formData.category || "None"}
           </p>
         </div>
-        <div>
+        {/* <div>
           <label className="block text-lg font-semibold">Tags</label>
           <div className="flex flex-wrap bg-gray-200 py-3 px-3 rounded-md gap-2 mt-1">
             {formData.tags
@@ -106,8 +106,25 @@ export default function EventPreview({ formData, photo, onEdit, onSubmit, isLoad
                 ))
               : <p className="px-3 py-2 rounded bg-gray-200 text-gray-500">No tags</p>}
           </div>
-        </div>
-      </div>
+        </div> */}
+        <div>
+  <label className="block text-lg font-semibold">Tags</label>
+
+  <div className="flex flex-wrap bg-gray-200 py-3 px-3 rounded-md gap-2 mt-1">
+    {formData.tags && formData.tags.length > 0 ? (
+      formData.tags.map((tag, i) => (
+        <span
+          key={i}
+          className="px-3 py-1 bg-white rounded-md text-sm shadow-sm">{tag}
+          </span>))) 
+          :
+           (<p className="px-3 py-2 text-gray-500">No tags</p>)}
+           </div>
+    </div>
+
+    </div>
+
+
 
       <h1 className="text-lg font-semibold py-2">Pricing</h1>
       {formData.free ? (
@@ -175,9 +192,18 @@ export default function EventPreview({ formData, photo, onEdit, onSubmit, isLoad
       )}
 
        <div className="flex gap-25 py-5">
-                <button onClick={onEdit} type="button" className="w-[100px] font-bold border-2 rounded-md py-2 px-2 h-[50px] hover:bg-purple-500 hover:border-0 hover:text-white">
-                  Edit
-                </button>
+               <motion.button
+               whileHover={{
+                scale: 1.1,
+                transition: { type: "spring", stiffness: 300, damping: 10 },
+            }}
+            whileTap={{
+                scale: 0.9,
+                transition: { type: "spring", stiffness: 500, damping: 20 },
+            }}
+            onClick={onEdit}
+            type="button"
+            className="w-[100px] font-bold border-2 rounded-md py-2 px-2 h-[50px] hover:bg-purple-5hover:border-0 hover:text-white">Edit</motion.button>
                 <Button
                 content={isLoading ? "Creating Event..." : "Create Event"}
                   type="submit"

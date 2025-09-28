@@ -8,7 +8,7 @@ export default function UpcomingEvents() {
     <div className="flex items-center py-5 px-5 lg:px-20">
       <div className="container mx-auto">
        <div className="flex justify-between">
-         <p className="text-lg font-semibold py-3">Upcoming Events</p>
+         <p className="text-[30px] font-semibold">Upcoming Events</p>
          <button disabled className="text-lg">see all</button>
        </div>
         <div className="flex-col lg:flex lg:flex-row justify-between items-center gap-5">

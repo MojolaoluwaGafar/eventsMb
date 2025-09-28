@@ -1,19 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import AppLayout from "../Layouts/AppLayout"
 import EventProperties from "../Components/EventDetailsPageComponents/EventProperties.jsx"
-import { events } from "../data.js"
+// import { events } from "../data.js"
 import { useParams } from "react-router"
 import { FaGreaterThan } from "react-icons/fa";
 import { Link } from "react-router"
 import OtherEvents from "../Components/EventDetailsPageComponents/EventsYouMightLike"
-
+import { EventContext } from "../Context/EventContext";
 
 export default function EventDetails() {
 
     const { eventId } = useParams()
-    const event =  events.find((e) => e.id === Number(eventId))
 
-
+    const { allEvents } = useContext(EventContext);
+    const event = allEvents.find((e) => String(e._id) === String(eventId));
 
   return (
     <>
@@ -28,7 +28,20 @@ export default function EventDetails() {
        </div>
       </div>
 
-        {event ? <EventProperties {...event} /> : <p>Event not found</p>}
+      {event ? (
+        <EventProperties id={event._id}
+        image={event.photo}
+        title={event.title}
+        location={event.location}
+        date={event.date}
+        tags={event.tags || []}
+        price={event.price || null}
+        description={event.description}
+        startTime={event.timeStart} />)
+        :
+        (<p>Event not found</p>)
+        }
+
 
         <OtherEvents />
     </AppLayout>

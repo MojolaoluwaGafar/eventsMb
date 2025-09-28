@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Button from "../Button";
 import SelectTicketModal from "../EventDetailsPageComponents/SelectTicketModal";
-import TicketModal from "./TicketModal"
 
 export default function PaymentCard({ event }) {
   const [showModal, setShowModal] = useState(false);
   const { price = {} } = event;
-  const { free, vip, regular } = price;
+  const { free, vip, regular } = event;
 
   const handleOpenModal = () => setShowModal(true);
 
@@ -39,11 +38,6 @@ export default function PaymentCard({ event }) {
         setShowModal={setShowModal}
         event={event}
       />
-      {/* <TicketModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        event={event}
-      /> */}
     </div>
   );
 }

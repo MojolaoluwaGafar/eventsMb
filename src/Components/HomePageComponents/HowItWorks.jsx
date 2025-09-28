@@ -6,7 +6,7 @@ export default function HowItWorks() {
   return (
     <div className="flex-row items-center py-5 px-5 lg:px-20">
      <div className="container mx-auto">
-       <h1 className="lg:text-center font-semibold text-xl">How it works</h1>
+       <h1 className="text-[30px] font-semibold">How it works</h1>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10 py-5">
         <div className="lg:w-1/2 bg-[#9747FF0F] p-10 rounded-md">
           <h1 className="font-semibold text-3xl">Join an Event</h1>

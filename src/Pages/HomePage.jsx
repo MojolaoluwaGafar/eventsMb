@@ -11,7 +11,7 @@ export default function HomePage() {
    const [pageLoading, setPageLoading] = useState(true);
 
     useEffect(() => {
-    const timer = setTimeout(() => setPageLoading(false), 1000);
+    const timer = setTimeout(() => setPageLoading(false), 10);
     return () => clearTimeout(timer);
   }, []); 
 

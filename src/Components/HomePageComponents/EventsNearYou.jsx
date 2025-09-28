@@ -14,7 +14,7 @@ export default function EventsNearYou() {
     <div className="flex items-center py-5 px-5 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <p className="text-lg font-semibold py-3">Events Near You</p>
+          <p className="text-[30px] font-semibold">Events Near You</p>
           <button disabled className="text-lg text-gray-400 cursor-not-allowed">
             See All
           </button>

@@ -15,7 +15,7 @@ export default function EventCategories() {
     <div className="flex items-center px-5 lg:px-20">
       <div className="container mx-auto">
       <div className="flex justify-between items-center">
-        <p className="text-lg font-semibold py-3">Events Categories</p>
+        <p className="text-[30px] font-semibold">Events Categories</p>
         <button disabled className="text-lg">See all</button>
       </div>
 

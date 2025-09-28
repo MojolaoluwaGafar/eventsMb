@@ -4,13 +4,13 @@ import {useNavigate} from "react-router"
 
 export default function ProtectRoute({children}) {
   const Navigate = useNavigate()
-    const {user} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
 
     useEffect(()=> {
-      if (!user) {
+      if (!token) {
         Navigate("/auth/signIn")
       }
-    }, [user, Navigate])
+    }, [token, Navigate])
     
   return children
 }

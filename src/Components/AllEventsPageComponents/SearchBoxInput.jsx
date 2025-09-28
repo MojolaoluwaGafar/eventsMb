@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Input from "../AuthComponents/Input"
 import { CiSearch } from "react-icons/ci";
 import Button from "../Button"
 import { motion } from "framer-motion"
-
+import { EventContext } from "../../Context/EventContext"
 
 
 export default function SearchBoxInput() {
-  const [query, setQuery] = useState('');
+
+  const { query, setQuery } = useContext(EventContext);
 
   return (
     <div className="bg-[#0E021E] flex items-center py-4">
       <div className="container mx-auto">
-        <motion.form initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex-col mx-auto">
+        <motion.form 
+        onSubmit={(e) => e.preventDefault()}  
+        initial={{ scale: 0 }} 
+        animate={{ scale: 1 }} 
+        className="flex-col mx-auto">
         <div className="relative w-[300px] lg:w-2/3 h-[50px] mx-auto flex items-center">
         <Input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         className="bg-white  text-lg font-semibold text-black w-full mx-auto lg:w-full h-full pl-10 pr-4 rounded" type="text" placeholder="Search events" value={query} onChange={(e) => setQuery(e.target.value)} />
         <CiSearch size={20} className="absolute top-4 left-3 text-gray-500" />
         </div>
@@ -55,8 +62,8 @@ export default function SearchBoxInput() {
               <option value="free">Free</option>
               <option value="paid">Paid</option>
             </select>
-        <Button className="px-4" content="Apply" />
-        <button className="px-4 py-2 text-purple-700 bg-transparent">Reset Filter</button>
+        <Button type="submit" className="px-4" content="Apply" />
+        <button type="reset"  className="px-4 py-2 text-purple-700 bg-transparent">Reset Filter</button>
         </div>
 
         </motion.form>

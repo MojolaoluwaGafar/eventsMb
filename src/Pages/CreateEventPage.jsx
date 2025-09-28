@@ -9,7 +9,7 @@ export default function CreateEventPage() {
    const [pageLoading, setPageLoading] = useState(true);
    
         useEffect(() => {
-        const timer = setTimeout(() => setPageLoading(false), 1000);
+        const timer = setTimeout(() => setPageLoading(false), 10);
         return () => clearTimeout(timer);
       }, []); 
     
@@ -19,7 +19,7 @@ export default function CreateEventPage() {
     <AppLayout>
        <div className="flex items-center px-5 py-2 lg:px-20">
         <div className="container mx-auto">
-             <h1 className="text-start text-2xl font-bold pb-5">Create event</h1>
+             <h1 className="text-[30px] font-semibold">Create event</h1>
              {showModal && ( <CreateEventsSuccessModal showModal={showModal} setShowModal={setShowModal} />)}
              <CreateEventForm />
         </div>

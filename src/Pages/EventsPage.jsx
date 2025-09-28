@@ -5,11 +5,12 @@ import Loader from '../Components/Loader'
 import { AnimatePresence } from "framer-motion"
 import AllEvents from "../Components/AllEventsPageComponents/AllEvents"
 
-export default function EventsPage() {
+export default function EventsPage({query, setQuery}) {
   const [pageLoading, setPageLoading] = useState(true);
-  
+ 
+
       useEffect(() => {
-      const timer = setTimeout(() => setPageLoading(false), 1000);
+      const timer = setTimeout(() => setPageLoading(false), 10);
       return () => clearTimeout(timer);
     }, []); 
   

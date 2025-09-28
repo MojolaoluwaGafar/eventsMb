@@ -4,7 +4,7 @@ export default function Input({id,name,type,className,placeholder, onChange, val
 
     return(
       <input
-        id={name}
+        id={name || id}
         name={name}
         type={type}
         placeholder={placeholder}

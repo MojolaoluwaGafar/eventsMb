@@ -1,3 +1,7 @@
+*{
+  font-family: 'Space Grotesk';
+}
+
 .hero{
   background-image: url("./assets/Hero-bg-image.png");
   background-repeat: no-repeat;

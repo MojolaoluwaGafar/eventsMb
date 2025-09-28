@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MdLocationPin } from "react-icons/md";
 import Button from "../Button"
 import { motion } from "framer-motion"
@@ -12,35 +12,32 @@ export default function CreateEventForm() {
       const [showModal, setShowModal] = useState(false);
 
       const [isPreviewing, setIsPreviewing] = useState(false);
-      const handleContinue = (e) => {
-        e.preventDefault();
-        if (!formValidate()) return;
-        setIsPreviewing(true);
-        };
+      const fileInputRef = useRef(null);
 
       const navigate = useNavigate();
       const [isLoading, setIsLoading] = useState(false);
       const [photo, setPhoto] = useState(null);
 
       const [errors, setErrors ] = useState({});
-
-      const [formData, setFormData ] = useState({
+      const initialFormData = {
         date: "",
         title: "",
-        hostedBy: "",
+        host: "",
         timeStart: "",
         timeEnd: "",
         location: "",
         online: false,
         description: "",
         category: "",
-        tags: "",
+        tags: [],
         free: false,
         regular: "",
         vip: "",
         regularEnabled: false,
-        vipEnabled: false,
-      });
+        vipEnabled: false,};
+
+      const [formData, setFormData] = useState(initialFormData);
+      
 
       const handleChange= (e)=>{
         const { name, value, type, checked } = e.target;
@@ -48,17 +45,18 @@ export default function CreateEventForm() {
           setFormData({...formData, free: checked, regular: "", vip: "", regularEnabled: false, vipEnabled: false});
           return;
         }
+        if (name === "tags") {setFormData({...formData,tags: value.split(" ").map(tag => tag.trim()).filter(Boolean)}); return;}
         setFormData({...formData, [name]: type === "checkbox" ? checked : value})
       }
 
       const formValidate = ()=>{
-        const { date, title, hostedBy, timeStart, timeEnd, location, online, description, category, tags, regular, vip, free, regularEnabled, vipEnabled } = formData;
+        const { date, title, host, timeStart, timeEnd, location, online, description, category, tags, regular, vip, free, regularEnabled, vipEnabled } = formData;
 
         const newErrors = {};
 
          if (!photo) newErrors.photo = "Photo is required";
+         if (!host) newErrors.host = "Host is required";
          if (!title) newErrors.title = "Title is required";
-         if(!hostedBy) newErrors.hostedBy = "Host is required"
          if (!date) newErrors.date = "Date is required";
          if (!timeStart) newErrors.timeStart = "Start time is required";
          if (!timeEnd) newErrors.timeEnd = "End time is required";
@@ -76,59 +74,70 @@ export default function CreateEventForm() {
          return Object.keys(newErrors).length === 0;
       }
 
-      const handleCancel=(e)=>{
+      // const handleImageEdit= (e)=>{
+      //   e.preventDefault();
+      //   if (fileInputRef.current) {
+      //     fileInputRef.current.click();
+      //   }
+      // }
+
+        const handleCancel =(e)=>{
         e.preventDefault();
         setPhoto(null);
-        setFormData({
-        date: "",
-        title: "",
-        timeStart: "",
-        timeEnd: "",
-        location: "",
-        online: false,
-        description: "",
-        category: "",
-        tags: "",
-        free: false,
-        regular: "",
-        vip: "",
-        regularEnabled: false,
-        vipEnabled: false,
-        hostedBy: ""
-      })
-      navigate("/");
-    };
+        setFormData(initialFormData);
+        navigate("/");
+      };
 
-      const handleSubmit = async (e)=>{
+
+     const handleContinue = (e) => {
         e.preventDefault();
         if (!formValidate()) return;
+        setIsPreviewing(true);
+        };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formValidate()) return toast.error("Please fix form errors before continuing");
         setIsLoading(true);
-        console.log(formData);
+        
         const data = new FormData();
+        const token = localStorage.getItem("token");
+        if (!token) {
+          return toast.error("User not authenticated");
+        }
         data.append("photo", photo);
-        data.append("tags", JSON.stringify(formData.tags.split(",").map(tag => tag.trim())));
-        Object.entries(formData).forEach(([key,value])=>{
-        if (key !== "tags") data.append(key, value);});
+        data.append("tags", JSON.stringify(formData.tags));
+        Object.entries(formData).forEach(([key, value]) => {
+          if (key !== "tags") data.append(key, value);
+        });
         try {
-          const response = await fetch(`${import.meta.env.VITE_EVENT_URL}/createEvent`,  {
-            method : "POST",
+          const response = await fetch(`${import.meta.env.VITE_EVENT_URL}/createEvent`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             body: data,
           });
+          
           const result = await response.json();
+          console.log("Response:", result);
+          
           if (response.ok) {
-            console.log(result);
-            toast.success("Event Created!")
-            setShowModal(true)
+            toast.success("Event Created!");
+            setShowModal(true);
+            setFormData(initialFormData);
+            setPhoto(null);}
+          else {
+            toast.error(result.message || "Failed to create an event");
           }
-          console.log(data);
         } catch (error) {
-          console.error("Network error:" , error)
-          setErrors("Failed to create event")
-          toast.error("Failed to create an event, try again!")
-        }finally{
-          setIsLoading(false)
+          console.error("Network error:", error);
+          toast.error("Failed to create an event, try again!");
+        } finally {
+          setIsLoading(false);
         }
-      }
+      };
+
 
   return (
     <>
@@ -147,13 +156,16 @@ export default function CreateEventForm() {
         <label htmlFor="upload" className="block text-lg font-semibold">Upload Photo</label>
         <div className="w-full h-95 bg-gray-300 flex items-center justify-center rounded-lg overflow-hidden">
           {photo ? (
-            <img
+            <div className="w-full relative">
+              <img
               src={URL.createObjectURL(photo)}
               alt="Uploaded"
               className="h-full w-full object-cover"
             />
+            {/* <button onClick={handleImageEdit} className="py-2 px-8 hover:cursor-pointer rounded-md absolute top-1/2 left-1/2 bg-white text-black">Edit</button> */}
+            </div>
           ) : (
-            <label className="rounded-md px-4 py-2 bg-white text-black text-lg font-semibold cursor-pointer">
+            <label className="rounded-md py-2 px-8 bg-white text-black text-lg font-semibold cursor-pointer">
               <input
               name="photo"
                 type="file"
@@ -174,13 +186,10 @@ export default function CreateEventForm() {
         <label htmlFor="title"  className="block text-lg font-semibold">Event Title</label>
         <input type="text" name="title" value={formData.title} onChange={handleChange} className="w-[150px] lg:w-sm px-3 py-2 rounded bg-gray-200 text-black" />
         {errors.title && <p className="text-red-500 font-semibold">{errors.title}</p>}
-  
 
-   <label htmlFor="host"  className="block text-lg font-semibold">Hosted by</label>
-        <input type="text" name="hostedBy" value={formData.hostedBy} onChange={handleChange} className="w-[150px] lg:w-sm px-3 py-2 rounded bg-gray-200 text-black" />
-        {errors.hostedBy && <p className="text-red-500 font-semibold">{errors.hostedBy}</p>}
-    
-
+        <label htmlFor="host"  className="block text-lg font-semibold">Host</label>
+        <input type="text" name="host" value={formData.host} onChange={handleChange} className="w-[150px] lg:w-sm px-3 py-2 rounded bg-gray-200 text-black" />
+        {errors.host && <p className="text-red-500 font-semibold">{errors.host}</p>}
 
         <h1 className="text-xl font-semibold py-2">Time & Location</h1>
 
@@ -341,6 +350,7 @@ export default function CreateEventForm() {
             Cancel
           </button>
           <Button
+           onClick={handleContinue}
           content={isLoading ? "Loading..." : "Continue"}
             type="submit"
             className="w-[120px]"
