@@ -33,8 +33,8 @@ export default function YourEventsPage() {
             {btns.map((btn) => {
               const isActive = btn.id === activeBtn;
               const btnClass = isActive
-                ? "h-[40px] lg:h-[60px] lg:w-1/3 bg-black text-white text-lg font-semibold px-4 py-2 rounded-md"
-                : "h-[40px] lg:h-[60px] lg:w-1/3 text-black text-lg font-semibold border-2 border-black px-4 py-2 rounded-md";
+                ? "h-[40px] lg:h-[60px] lg:w-1/3 bg-black text-white text-lg font-semibold px-4 py-2 rounded-md flex items-center"
+                : "h-[40px] lg:h-[60px] lg:w-1/3 text-black text-lg font-semibold border-2 border-black px-4 py-2 rounded-md flex items-center";
               return (
                 <button
                   onClick={() => setActiveBtn(btn.id)}

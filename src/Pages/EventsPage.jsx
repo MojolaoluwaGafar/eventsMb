@@ -1,13 +1,15 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState , useEffect, useContext} from 'react'
 import AppLayout from "../Layouts/AppLayout"
 import SearchBoxInput from "../Components/AllEventsPageComponents/SearchBoxInput"
 import Loader from '../Components/Loader'
 import { AnimatePresence } from "framer-motion"
 import AllEvents from "../Components/AllEventsPageComponents/AllEvents"
-
-export default function EventsPage({query, setQuery}) {
+import {EventContext} from "../Context/EventContext"
+export default function EventsPage() {
   const [pageLoading, setPageLoading] = useState(true);
- 
+  const { allEvents, searchResults } = useContext(EventContext);
+
+  const eventsToShow = searchResults.length > 0 ? searchResults : allEvents;
 
       useEffect(() => {
       const timer = setTimeout(() => setPageLoading(false), 10);
@@ -19,7 +21,7 @@ export default function EventsPage({query, setQuery}) {
     <AnimatePresence>
     <AppLayout>
         <SearchBoxInput />
-        <AllEvents />
+        <AllEvents events={eventsToShow} />
 
 
 

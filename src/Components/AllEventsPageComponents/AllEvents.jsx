@@ -4,7 +4,7 @@ import Loader from "../../Components/Loader";
 import { EventContext } from "../../Context/EventContext"; 
 import { useParams } from "react-router"
 
-export default function AllEvents() {
+export default function AllEvents({ events = [] }) {
   const { eventId } = useParams();
   const { allEvents, loading } = useContext(EventContext);
 

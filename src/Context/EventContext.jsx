@@ -18,6 +18,8 @@ export const EventProvider = ({ children }) => {
     tags: "",
     price: "",
   });
+  const [searchResults, setSearchResults] = useState([]);
+
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -29,6 +31,28 @@ export const EventProvider = ({ children }) => {
       setUserEvents({ hosting: [], attending: [], previous: [] });
     }
   }, []);
+
+  
+
+const fetchSearchEvents = async (query, filters = {}) => {
+  try {
+    const params = new URLSearchParams({ search: query, ...filters });
+    const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await res.json();
+    setSearchResults(Array.isArray(data.events) ? data.events : []);
+    setFilters({category: data.events.category})
+  } catch (err) {
+    console.error("Search error:", err);
+    setSearchResults([]);
+  }
+};
+
 
   const fetchUsersEvents = async (type) => {
     if (!token || !user) {
@@ -118,6 +142,8 @@ export const EventProvider = ({ children }) => {
         token,
         fetchUsersEvents,
         fetchAllEvents,
+        fetchSearchEvents,
+        searchResults,
         userEvents,
         allEvents,
         query,

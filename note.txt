@@ -1,13 +1,18 @@
-lazy loading for images 
-image optimazation
-
-
-//events page
-search functionalities **
 events pagination **
-//10
 
 
-for you section on homepage 
+//general
+//events card on homepage still fetching from mock data
 
 
+
+//aishas errors
+//creating events... success
+//All events and Hosting events... all events should display real time events not mock data same as hosting events
+//unauthorised on hosting events
+//searching for events
+
+
+//mides fixes
+// creating event - event preview..success
+//displaying of allevents and hosting events ...false.
