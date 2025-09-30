@@ -35,7 +35,7 @@ export default function Header() {
      {
       id : 2,
       content : "Profile",
-      to: "/coming-soon",
+      to: "/profile",
       icon: <LuUserRoundPen className="text-dark" />
     },
     {

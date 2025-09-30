@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import AppLayout from "../Layouts/AppLayout";
 import { EventContext } from "../Context/EventContext";
 import EventsCard from "../Components/EventsCard"
+import Loader from "../Components/Loader"
 
 export default function YourEventsPage() {
   const { fetchUsersEvents,userEvents, loading, error,user,token } = useContext(EventContext);
@@ -49,7 +50,7 @@ export default function YourEventsPage() {
 
           <div className="mt-6">
             {loading ? (
-              <p>Loading...</p>
+              <Loader />
             ) : error ? (
               <p className="text-red-500">{error}</p>
             ) : currentEvents.length > 0 ? (

@@ -10,7 +10,7 @@ export default function EventProperties({id,image,title,location,date,tags,price
   return (
     <div className="flex items-center px-5 lg:px-20">
         <div className="container mx-auto">
-        <img className="w-full h-[345px]" src={image} alt="" />
+        <img className="w-full h-[345px] rounded-lg" src={image} alt="" />
         <div className="lg:flex mt-5 mb-3 justify-between">
             
             <div>

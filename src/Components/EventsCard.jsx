@@ -33,28 +33,27 @@ export default function EventsCard({
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        onHoverStart={() => console.log("hover started!")}
         className="mx-auto my-8 lg:my-0 w-full transition-shadow hover:shadow-lg hover:p-4 hover:rounded-md"
       >
         <img
           src={image}
           alt={title ? `${title} event poster` : "Event poster"}
-          className="rounded-md w-full"
+          className="rounded-md w-full h-[200px]"
           loading="lazy"
         />
+          <h3 className="text-lg pt-1 my-auto font-semibold">{title || "No title"}</h3>
         <div className="mt-2 capitalize">
-          <h3 className="text-lg my-auto font-semibold">{title || "No title"}</h3>
           <p className="text-lg">
             <span className="font-semibold">Host: <span>{hostName}</span></span>
           </p>
           <p className="mb-0">
             <span className="font-semibold text-lg mt-3 capitalize">
               Category:
-            </span>{" "}
+            </span>
             {displayedCategory}
           </p>
           <div className="flex items-center text-lg gap-2">
-            <FaLocationDot />{" "}
+            <FaLocationDot />
             <span>{location || "Online"}</span>
           </div>
           <div className="flex items-center text-lg gap-2">

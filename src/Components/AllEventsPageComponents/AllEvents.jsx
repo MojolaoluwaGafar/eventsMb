@@ -18,7 +18,7 @@ export default function AllEvents({ events = [] }) {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {allEvents.map((event) => (
-            <EventsCard key={event.id || event._id} {...event} />
+            <EventsCard key={event.id || event._id } {...event} />
           ))}
         </div>
       </div>

@@ -13,6 +13,7 @@ import CreateEventPage from "./Pages/CreateEventPage"
 import ComingSoon from "./Components/ComingSoon"
 import ProtectedRoute from "./Components/ProtectedRoute"
 import YourEventsPage from "./Pages/YourEventsPage"
+import Profile from "./Pages/Profile" 
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
         <Route path="/events" element={<ProtectedRoute><EventsPage /></ProtectedRoute>} />
         <Route path="/createEvent" element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
         <Route path="/your-events" element={<ProtectedRoute><YourEventsPage /></ProtectedRoute>} />
-
+         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="*" element={<Error404 />} />
       </Routes>

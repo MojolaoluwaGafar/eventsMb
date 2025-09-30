@@ -19,11 +19,11 @@ export default function EventDetails() {
     <>
     <AppLayout>
       <div className="flex items-center px-5 lg:px-20">
-         <div className="container mx-auto my-4 flex items-center gap-1 text-xl">
+         <div className="container mx-auto my-6 flex items-center gap-1 text-xl">
         <Link to="/"><p>Home</p></Link>
-        <FaGreaterThan />
+        <span className="text-purple-800 text-[12px]"><FaGreaterThan /></span>
         <Link to="/events"><p  className="font-semibold">Event</p></Link>
-        <span className="text-purple-800"><FaGreaterThan /></span>
+        <span className="text-purple-800 text-[12px]"><FaGreaterThan /></span>
         <p className="text-purple-800 font-semibold">Event Details</p>
        </div>
       </div>
