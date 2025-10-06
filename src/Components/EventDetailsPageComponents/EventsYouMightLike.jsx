@@ -1,14 +1,17 @@
-import React from 'react';
-import { events } from '../../data.js';
+import React, { useContext, useEffect, useState } from 'react';
+import { EventContext } from "../../Context/EventContext";
 import EventsCard from '../EventsCard.jsx';
 
 export default function EventsYouMightLike() {
-  const getRandomEvents = (arr, count) => {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
+  const { allEvents, loading } = useContext(EventContext);
+  const [randomEvents, setRandomEvents] = useState([]);
 
-  const randomEvents = getRandomEvents(events, 3);
+  useEffect(() => {
+    if (allEvents && allEvents.length > 0) {
+      const shuffled = [...allEvents].sort(() => Math.random() - 0.5);
+      setRandomEvents(shuffled.slice(0, 3));
+    }
+  }, [allEvents]);
 
   return (
     <div className="flex items-center py-5 px-5 lg:px-20">
@@ -21,7 +24,7 @@ export default function EventsYouMightLike() {
         </div>
         <div className="flex flex-col lg:flex-row justify-between items-center gap-5">
           {randomEvents.map((event) => (
-            <EventsCard key={event.id} {...event} />
+            <EventsCard key={event.id || event._id} {...event} />
           ))}
         </div>
       </div>

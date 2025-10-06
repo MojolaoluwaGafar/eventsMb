@@ -1,17 +1,17 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "../Context/AuthContext";
 
 export const EventContext = createContext();
 
 export const EventProvider = ({ children }) => {
+  const { user, token } = useContext(AuthContext); // ✅ Use from AuthContext only
+
   const [userEvents, setUserEvents] = useState({
     hosting: [],
     attending: [],
     previous: [],
   });
-  const [user, setUser] = useState(null);
-  const [loadingUserEvents, setLoadingUserEvents] = useState(false);
-  const [token, setToken] = useState(null);
 
   const [allEvents, setAllEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -21,9 +21,9 @@ export const EventProvider = ({ children }) => {
   const [loadingUpcoming, setLoadingUpcoming] = useState(false);
   const [loadingNearby, setLoadingNearby] = useState(false);
   const [loadingAll, setLoadingAll] = useState(false);
+  const [loadingUserEvents, setLoadingUserEvents] = useState(false);
 
   const [error, setError] = useState(null);
-
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState({
     location: "",
@@ -31,17 +31,6 @@ export const EventProvider = ({ children }) => {
     tags: "",
     price: "",
   });
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedToken = localStorage.getItem("token");
-
-    if (storedUser && storedToken) {
-      setUser(storedUser);
-      setToken(storedToken);
-      setUserEvents({ hosting: [], attending: [], previous: [] });
-    }
-  }, []);
 
   const fetchUpcomingEvents = async () => {
     try {
@@ -72,6 +61,7 @@ export const EventProvider = ({ children }) => {
       const res = await fetch(
         `${import.meta.env.VITE_EVENT_URL}/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
+
       const data = await res.json();
       if (!res.ok) throw new Error(data?.message || "Failed to fetch nearby events");
 
@@ -92,8 +82,8 @@ export const EventProvider = ({ children }) => {
       setError(null);
 
       let url = `${import.meta.env.VITE_EVENT_URL}/all`;
-
       const params = new URLSearchParams();
+
       if (searchQuery) params.append("query", searchQuery);
       if (appliedFilters.location) params.append("location", appliedFilters.location);
       if (appliedFilters.category) params.append("category", appliedFilters.category);
@@ -107,8 +97,8 @@ export const EventProvider = ({ children }) => {
 
       const res = await fetch(url, { headers: { "Content-Type": "application/json" } });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
 
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
       setAllEvents(Array.isArray(data.events) ? data.events : []);
     } catch (err) {
       setError(err.message);
@@ -124,7 +114,7 @@ export const EventProvider = ({ children }) => {
       const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -137,42 +127,42 @@ export const EventProvider = ({ children }) => {
   };
 
   const fetchUsersEvents = async (type, userId) => {
-  try {
-    setLoadingUserEvents(true);
-    setError(null);
+    if (!userId) return;
 
-    const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/${type}/${userId}`, {
-      headers: { 
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}` 
-      },
-    });
+    try {
+      setLoadingUserEvents(true);
+      setError(null);
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.message || "Failed to fetch user events");
+      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/${type}/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    setUserEvents((prev) => ({ ...prev, [type]: data.events || [] }));
-  } catch (err) {
-    setError(err.message);
-    setUserEvents((prev) => ({ ...prev, [type]: [] }));
-  } finally {
-    setLoadingUserEvents(false);
-  }
-};
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch user events");
 
+      setUserEvents((prev) => ({ ...prev, [type]: data.events || [] }));
+    } catch (err) {
+      setError(err.message);
+      setUserEvents((prev) => ({ ...prev, [type]: [] }));
+    } finally {
+      setLoadingUserEvents(false);
+    }
+  };
 
   useEffect(() => {
     fetchAllEvents(query, filters);
   }, [query, filters]);
 
   useEffect(() => {
-  if (user?._id) {
-    fetchUsersEvents("hosting", user._id);
-    fetchUsersEvents("attending", user._id);
-    fetchUsersEvents("previous", user._id);
-  }
-}, [user]);
-
+    if (user?._id) {
+      fetchUsersEvents("hosting", user._id);
+      fetchUsersEvents("attending", user._id);
+      fetchUsersEvents("previous", user._id);
+    }
+  }, [user]);
 
   return (
     <EventContext.Provider
@@ -187,14 +177,10 @@ export const EventProvider = ({ children }) => {
         query,
         setQuery,
         error,
-
-        // Loaders
         loadingUpcoming,
         loadingNearby,
         loadingAll,
         loadingUserEvents,
-
-        // Functions
         fetchUpcomingEvents,
         fetchNearbyEvents,
         fetchAllEvents,

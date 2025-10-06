@@ -20,8 +20,8 @@ export default function Footer() {
     links: [
       { label: "Home", to: "/" },
       { label: "Events", to: "/events" },
-      { label: "About", to: "/about" },
-      { label: "Contact", to: "/contact" }
+      { label: "About", to: "/coming-soon" },
+      { label: "Contact", to: "/coming-soon" }
     ]
   }
 ];

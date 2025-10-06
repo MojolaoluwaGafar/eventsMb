@@ -3,8 +3,14 @@ import image from "../../assets/Frame 1171276721.png";
 import image2 from "../../assets/Frame 1171276722.png";
 import image3 from "../../assets/Frame 1171276723.png";
 import { Link } from "react-router";
+import {useNavigate} from "react-router"
 
 export default function EventCategories() {
+  const navigate = useNavigate()
+  const handleSeeAll =(e)=>{
+    e.preventDefault();
+    navigate("/events")
+  }
   const categories = [
     { id: 1, img: image, category: "Concert" },
     { id: 2, img: image2, category: "Education" },
@@ -16,7 +22,7 @@ export default function EventCategories() {
       <div className="container mx-auto">
       <div className="flex justify-between items-center">
         <p className="text-[30px] font-semibold">Events Categories</p>
-        <button disabled className="text-lg">See all</button>
+        <button onClick={handleSeeAll} className="text-lg">See all</button>
       </div>
 
       <div className="flex flex-wrap gap-5 lg:flex-nowrap my-4">

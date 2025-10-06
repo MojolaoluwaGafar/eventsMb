@@ -29,15 +29,20 @@ export default function EventDetails() {
       </div>
 
       {event ? (
-        <EventProperties id={event._id}
-        image={event.photo}
-        title={event.title}
-        location={event.location}
-        date={event.date}
-        tags={event.tags || []}
-        price={event.price || null}
-        description={event.description}
-        startTime={event.timeStart} />)
+       <EventProperties
+       id={event._id}
+       image={event.photo}
+       title={event.title}
+       location={event.location}
+       date={event.date}
+       tags={event.tags}
+       description={event.description}
+       startTime={event.timeStart}
+       free={event.free}
+       regular={event.regular}
+       vip={event.vip}
+       vipEnabled={event.vipEnabled}
+       regularEnabled={event.regularEnabled}/>)
         :
         (<p>Event not found</p>)
         }
