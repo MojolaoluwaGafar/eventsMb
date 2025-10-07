@@ -38,38 +38,78 @@ console.log("User from AuthContext:", user);
     price: "",
   });
 
-  const fetchAllEvents = async (searchQuery = "", appliedFilters = {}) => {
-    try {
-      setLoadingAll(true);
-      setError(null);
+  // const fetchAllEvents = async (searchQuery = "", appliedFilters = {}) => {
+  //   try {
+  //     setLoadingAll(true);
+  //     setError(null);
 
-      let url = `${import.meta.env.VITE_EVENT_URL}/all`;
-      const params = new URLSearchParams();
+  //     let url = `${import.meta.env.VITE_EVENT_URL}/all`;
+  //     const params = new URLSearchParams();
 
-      if (searchQuery) params.append("query", searchQuery);
-      if (appliedFilters.location) params.append("location", appliedFilters.location);
-      if (appliedFilters.category) params.append("category", appliedFilters.category);
-      if (appliedFilters.tags) params.append("tags", appliedFilters.tags);
-      if (appliedFilters.price === "free") params.append("price", "free");
-      if (appliedFilters.price === "paid") params.append("price", "paid");
+  //     if (searchQuery) params.append("query", searchQuery);
+  //     if (appliedFilters.location) params.append("location", appliedFilters.location);
+  //     if (appliedFilters.category) params.append("category", appliedFilters.category);
+  //     if (appliedFilters.tags) params.append("tags", appliedFilters.tags);
+  //     if (appliedFilters.price === "free") params.append("price", "free");
+  //     if (appliedFilters.price === "paid") params.append("price", "paid");
 
-      if ([...params].length > 0) {
-        url = `${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`;
-      }
+  //     if ([...params].length > 0) {
+  //       url = `${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`;
+  //     }
 
-      const res = await fetch(url);
-      const data = await res.json();
+  //     const res = await fetch(url);
+  //     const data = await res.json();
 
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
-      setAllEvents(Array.isArray(data.events) ? data.events : []);
-    } catch (err) {
-      console.error("Error fetching all events:", err);
-      setError(err.message);
-      setAllEvents([]);
-    } finally {
-      setLoadingAll(false);
+  //     if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
+  //     setAllEvents(Array.isArray(data.events) ? data.events : []);
+  //   } catch (err) {
+  //     console.error("Error fetching all events:", err);
+  //     setError(err.message);
+  //     setAllEvents([]);
+  //   } finally {
+  //     setLoadingAll(false);
+  //   }
+  // };
+  const fetchAllEvents = async (searchQuery = "", appliedFilters = {}, page = 1, limit = 10) => {
+  try {
+    setLoadingAll(true);
+    setError(null);
+
+    let url = `${import.meta.env.VITE_EVENT_URL}/all`;
+    const params = new URLSearchParams();
+
+    if (searchQuery) params.append("query", searchQuery);
+    if (appliedFilters.location) params.append("location", appliedFilters.location);
+    if (appliedFilters.category) params.append("category", appliedFilters.category);
+    if (appliedFilters.tags) params.append("tags", appliedFilters.tags);
+    if (appliedFilters.price) params.append("price", appliedFilters.price);
+
+    params.append("page", page);
+    params.append("limit", limit);
+
+    if ([...params].length > 0) {
+      url = `${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`;
     }
-  };
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
+
+    setAllEvents(Array.isArray(data.events) ? data.events : []);
+    return {
+      totalPages: data.pages || 1,
+      currentPage: data.page || 1
+    };
+  } catch (err) {
+    console.error("Error fetching all events:", err);
+    setError(err.message);
+    setAllEvents([]);
+    return { totalPages: 1, currentPage: 1 };
+  } finally {
+    setLoadingAll(false);
+  }
+};
 
 const fetchUsersEvents = async (type, userId) => {
   if (!userId || !type) return;
