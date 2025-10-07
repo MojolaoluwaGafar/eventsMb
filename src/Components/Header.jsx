@@ -11,7 +11,7 @@ import { FiSettings } from "react-icons/fi";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-
+import { GiHamburgerMenu } from "react-icons/gi";
 
 
 export default function Header() {
@@ -38,18 +38,18 @@ export default function Header() {
       to: "/profile",
       icon: <LuUserRoundPen className="text-dark" />
     },
-    {
-      id : 3,
-      content : "Settings",
-      to: "/coming-soon",
-      icon: <FiSettings className="text-dark" />
-    },
-    {
-      id : 4,
-      content : "Help",
-      to: "/coming-soon",
-      icon: <MdOutlineHelpOutline className="text-dark" />
-    }
+    // {
+    //   id : 3,
+    //   content : "Settings",
+    //   to: "/setting",
+    //   icon: <FiSettings className="text-dark" />
+    // },
+    // {
+    //   id : 4,
+    //   content : "Help",
+    //   to: "/help",
+    //   icon: <MdOutlineHelpOutline className="text-dark" />
+    // }
   ]
 
   const UserMenu =()=>{
@@ -71,9 +71,9 @@ export default function Header() {
           transition={{ duration: 0.2 }}
           className="absolute top-full right-0 bg-white shadow-lg rounded-md w-50 z-10">
             {userMenuLinks.map((link)=>{
-              return <Link key={link.id} to={link.to} className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-lg text-dark border-b border-b-gray-500"><span>{link.icon}</span>{link.content}</Link>
+              return <Link key={link.id} to={link.to} className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-[20px] text-dark border-b border-b-gray-500"><span>{link.icon}</span>{link.content}</Link>
             })}
-            <button onClick={handleLogout} className="flex items-center gap-2 w-full text-left px-4 py-2 text-lg text-red-600 hover:bg-gray-100"><span className="text-red-600"><FiLogOut /></span>Logout</button>
+            <button onClick={handleLogout} className="flex items-center gap-2 w-full text-left px-4 py-2 text-[20px] text-red-600 hover:bg-gray-100"><span className="text-red-600"><FiLogOut /></span>Logout</button>
           </motion.div>)}
       </div>
     )
@@ -96,7 +96,7 @@ export default function Header() {
             <Link
               key={link.id}
               to={link.to}
-              className={ location.pathname === link.to ? "text-lg underline font-bold text-purple-500 hover:text-purple-900" : "text-lg hover:underline"}
+              className={ location.pathname === link.to ? "text-[22px] underline font-bold text-purple-500 hover:text-purple-900" : "text-[22px] hover:underline"}
             >
               {link.pathName}
             </Link>
@@ -121,7 +121,7 @@ export default function Header() {
         </div>
 
         <div className="md:hidden" onClick={toggleMenu} aria-label="Toggle menu">
-          {isMenuOpen ? <HiX size={30} /> : <HiMenuAlt3 size={30} />}
+          {isMenuOpen ? <HiX size={30} /> : <GiHamburgerMenu  size={30} />}
         </div>
       </motion.div>
 
@@ -134,7 +134,7 @@ export default function Header() {
             <Link
               key={link.id}
               to={link.to}
-              className={ location.pathname === link.to ? "text-lg underline font-bold text-purple-500" : "text-lg"}
+              className={ location.pathname === link.to ? "text-[25px] underline font-bold text-purple-500" : "text-[25px]"}
               onClick={toggleMenu}
             >
               {link.pathName}

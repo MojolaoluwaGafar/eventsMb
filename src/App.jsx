@@ -27,13 +27,13 @@ function App() {
         <Route path="/auth/forgotPassword" element={<ForgotPassword />} />
         <Route path="/auth/resetPassword/:token" element={<ResetPassword />} />
         <Route path="/auth/interests" element={<Interests />} />
-        <Route path="/events/:eventId" element={<EventDetailsPage />} />
+        <Route path="/event/:eventId" element={<EventDetailsPage />} />
 
 
         <Route path="/events" element={<ProtectedRoute><EventsPage /></ProtectedRoute>} />
         <Route path="/createEvent" element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
         <Route path="/your-events" element={<ProtectedRoute><YourEventsPage /></ProtectedRoute>} />
-         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="*" element={<Error404 />} />
       </Routes>

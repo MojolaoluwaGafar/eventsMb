@@ -3,52 +3,226 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "../Button";
 import {toast} from "react-toastify"
 import {AuthContext} from "../../Context/AuthContext";
+import {useNavigate} from "react-router"
 
-
-export default function SelectTicketModal({ showModal, setShowModal, event }) {
+export default function SelectTicketModal({ showModal, setShowModal, event,   setShowSuccessModal,
+  setPaymentData, }) {
   const {user} = useContext(AuthContext)
   const [vipCount, setVipCount] = useState(0);
   const [regularCount, setRegularCount] = useState(0);
-
+  const navigate = useNavigate()
   if (!showModal || !event) return null;
 
   const { free = false, vip = 0, regular = 0 } = event;
   const totalPrice = free ? 0 : vipCount * vip + regularCount * regular;
 
-  const handlePayment = async () => {
+//   const handlePayment = async () => {
+//   try {
+//     console.log("Current user in payment:", user);
+//     console.log("handlePayment triggered");
+
+//     if (!user?.id || !user?.email) {
+//       toast.error("Please log in before purchasing a ticket");
+//       return;
+//     }
+//     let selectedTicket = "";
+//     let amount = 0;
+
+//     if (vipCount > 0) {
+//       selectedTicket = "vip";
+//       amount = vipCount * vip;
+//     } else if (regularCount > 0) {
+//       selectedTicket = "regular";
+//       amount = regularCount * regular;
+//     } else {
+//       toast.error("Please select at least one ticket");
+//       return;
+//     }
+
+//     console.log(" Selected Ticket:", selectedTicket, "Amount:", amount);
+
+//     const response = await fetch("http://localhost:5000/api/payments/initiate", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         email: user.email,
+//         amount,
+//         eventId: event.id,
+//         ticketType: selectedTicket,
+//         userId: user.userId,
+//       }),
+//     });
+
+//     const data = await response.json();
+//     console.log("Payment init response:", data);
+
+//     if (data.success && data.authorization_url) {
+//       toast.info("Redirecting to Paystack...");
+//       window.location.href = data.authorization_url;
+//     } else {
+//       console.error("Payment init failed:", data.message);
+//       toast.error(data.message || "Payment initialization failed");
+//     }
+//   } catch (error) {
+//     console.error("Payment error:", error);
+//     toast.error("An error occurred while initializing payment");
+//   }
+// };
+
+
+// const handlePayment = async () => {
+//   try {
+//     console.log("Current user in payment:", user);
+//     console.log("🟣 handlePayment triggered");
+
+//     if (!user) {
+//   toast.error("Please log in before purchasing a ticket");
+//   console.warn("User context is empty:", user);
+//   return;
+// }
+
+// if (!user.id || !user.email) {
+//   toast.error("Invalid user data. Please log in again.");
+//   console.warn("User data invalid:", user);
+//   return;
+// }
+
+
+//     let selectedTicket = "";
+//     let amount = 0;
+
+//     const vipPrice = Number(vip) || 0;
+//     const regularPrice = Number(regular) || 0;
+
+//     if (vipCount > 0) {
+//       selectedTicket = "vip";
+//       amount = vipCount * vipPrice;
+//     } else if (regularCount > 0) {
+//       selectedTicket = "regular";
+//       amount = regularCount * regularPrice;
+//     } else {
+//       toast.error("Please select at least one ticket");
+//       return;
+//     }
+
+//     if (amount <= 0) {
+//       toast.error("Invalid ticket amount");
+//       console.error("Amount is invalid:", amount);
+//       return;
+//     }
+
+//     console.log("✅ Selected Ticket:", selectedTicket, "Amount:", amount);
+//     const paymentData = {
+//   email: user.email,
+//   amount,
+//   eventId: event._id,
+//   ticketType: selectedTicket,
+//   userId: user.id || user._id,
+// };
+
+
+//     const response = await fetch("http://localhost:5000/api/payments/initiate", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(paymentData),
+//     });
+
+//     const data = await response.json();
+//     console.log("Payment init response:", data);
+
+//     if (data.success && data.authorization_url) {
+//       toast.info("Redirecting to Paystack...");
+//       window.location.href = data.authorization_url;
+//     } else {
+//       console.error("Payment init failed:", data.message);
+//       toast.error(data.message || "Payment initialization failed");
+//     }
+//   } catch (error) {
+//     console.error("Payment error:", error);
+//     toast.error("An error occurred while initializing payment");
+//   }
+// };
+
+const handlePayment = async () => {
   try {
+    console.log("Current user in payment:", user);
     console.log("handlePayment triggered");
 
-    if (!user?.userId || !user?.email) {
+    if (!user) {
       toast.error("Please log in before purchasing a ticket");
+      console.warn("User context is empty:", user);
       return;
     }
+
+    if (!user.id && !user._id) {
+      toast.error("Invalid user data. Please log in again.");
+      console.warn("User data invalid:", user);
+      return;
+    }
+
     let selectedTicket = "";
     let amount = 0;
 
+    const vipPrice = Number(vip) || 0;
+    const regularPrice = Number(regular) || 0;
+
     if (vipCount > 0) {
       selectedTicket = "vip";
-      amount = vipCount * vip;
+      amount = vipCount * vipPrice;
     } else if (regularCount > 0) {
       selectedTicket = "regular";
-      amount = regularCount * regular;
+      amount = regularCount * regularPrice;
     } else {
       toast.error("Please select at least one ticket");
       return;
     }
 
-    console.log(" Selected Ticket:", selectedTicket, "Amount:", amount);
+    console.log("Selected Ticket:", selectedTicket, "Amount:", amount);
+
+    const paymentData = {
+      email: user.email,
+      amount,
+      eventId: event._id,
+      ticketType: selectedTicket,
+      userId: user.id || user._id,
+    };
+
+
+    if (amount === 0) {
+      console.log("Free event detected — registering ticket directly...");
+      const response = await fetch("http://localhost:5000/api/payments/initiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentData),
+      });
+
+      const data = await response.json();
+      console.log("Free event response:", data);
+
+      if (data.success || data.ticket) {
+        toast.success("Free event ticket registered successfully!");
+        setShowModal(false);
+
+       setShowModal(false);
+       setShowSuccessModal(true);
+       setPaymentData({
+           eventId: event._id,
+           ticketType: selectedTicket,
+           amount: 0,
+      });
+
+      } else {
+        toast.error(data.message || "Failed to register for free event");
+      }
+
+      return;
+    }
+    console.log("Paid event — initiating Paystack payment...");
 
     const response = await fetch("http://localhost:5000/api/payments/initiate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: user.email,
-        amount,
-        eventId: event._id,
-        ticketType: selectedTicket,
-        userId: user.userId,
-      }),
+      body: JSON.stringify(paymentData),
     });
 
     const data = await response.json();
@@ -61,6 +235,7 @@ export default function SelectTicketModal({ showModal, setShowModal, event }) {
       console.error("Payment init failed:", data.message);
       toast.error(data.message || "Payment initialization failed");
     }
+
   } catch (error) {
     console.error("Payment error:", error);
     toast.error("An error occurred while initializing payment");
@@ -93,10 +268,10 @@ export default function SelectTicketModal({ showModal, setShowModal, event }) {
 
           <button
             onClick={() => setShowModal(false)}
-            className="absolute top-2 right-2 text-white font-bold text-xl"
+            className="absolute top-2 right-2 text-white font-bold text-[18px]"
             aria-label="Close modal"
           >
-            ×
+            x
           </button>
 
           <div className="py-3">

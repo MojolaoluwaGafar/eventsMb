@@ -71,11 +71,9 @@ const login = async (formData) => {
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || "Login failed");
 
-  // Clear old session
   localStorage.clear();
   sessionStorage.clear();
 
-  // Save fresh session
   setUser(data.user);
   setToken(data.token);
 
@@ -83,6 +81,8 @@ const login = async (formData) => {
   localStorage.setItem("token", data.token);
   localStorage.setItem("userId", data.user._id || data.user.id);
 
+  console.log(data);
+  
   return data;
 };
 

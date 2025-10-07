@@ -5,12 +5,18 @@ import { AuthContext } from "../Context/AuthContext";
 export const EventContext = createContext();
 
 export const EventProvider = ({ children }) => {
-  const { user, token } = useContext(AuthContext); // ✅ Use from AuthContext only
+  const { user, token } = useContext(AuthContext);
+
+  console.log("EventProvider mounted");
+console.log("User from AuthContext:", user);
+
 
   const [userEvents, setUserEvents] = useState({
     hosting: [],
     attending: [],
     previous: [],
+    purchasedTickets: [],
+    soldTickets: [],
   });
 
   const [allEvents, setAllEvents] = useState([]);
@@ -32,50 +38,6 @@ export const EventProvider = ({ children }) => {
     price: "",
   });
 
-  const fetchUpcomingEvents = async () => {
-    try {
-      setLoadingUpcoming(true);
-      setError(null);
-
-      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/upcoming`, {
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
-
-      setUpcomingEvents(Array.isArray(data.events) ? data.events : []);
-    } catch (err) {
-      setError(err.message);
-      setUpcomingEvents([]);
-    } finally {
-      setLoadingUpcoming(false);
-    }
-  };
-
-  const fetchNearbyEvents = async (lat, lng, radius = 25) => {
-    try {
-      setLoadingNearby(true);
-      setError(null);
-
-      const res = await fetch(
-        `${import.meta.env.VITE_EVENT_URL}/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
-      );
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch nearby events");
-
-      setNearbyEvents(Array.isArray(data.events) ? data.events : []);
-      return data.events;
-    } catch (err) {
-      setError(err.message);
-      setNearbyEvents([]);
-      return [];
-    } finally {
-      setLoadingNearby(false);
-    }
-  };
-
   const fetchAllEvents = async (searchQuery = "", appliedFilters = {}) => {
     try {
       setLoadingAll(true);
@@ -95,16 +57,132 @@ export const EventProvider = ({ children }) => {
         url = `${import.meta.env.VITE_EVENT_URL}/search?${params.toString()}`;
       }
 
-      const res = await fetch(url, { headers: { "Content-Type": "application/json" } });
+      const res = await fetch(url);
       const data = await res.json();
 
       if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
       setAllEvents(Array.isArray(data.events) ? data.events : []);
     } catch (err) {
+      console.error("Error fetching all events:", err);
       setError(err.message);
       setAllEvents([]);
     } finally {
       setLoadingAll(false);
+    }
+  };
+
+const fetchUsersEvents = async (type, userId) => {
+  if (!userId || !type) return;
+
+  try {
+    setLoadingUserEvents(true);
+    setError(null);
+
+    const baseUrl = import.meta.env.VITE_EVENT_URL.replace(/\/$/, "");
+    const url = `${baseUrl}/${type}/${userId}`;
+    console.log("Fetching from:", url);
+
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    console.log("Response:", data);
+
+    if (!res.ok) throw new Error(data?.message || "Failed to fetch events");
+
+    const newEvents = Array.isArray(data?.events) ? data.events : [];
+
+    setUserEvents((prev) => ({
+      ...prev,
+      [type]: newEvents,
+    }));
+
+    console.log(`${type} events set:`, newEvents.length);
+  } catch (err) {
+    console.error(`Error fetching ${type} events:`, err);
+    setError(err.message);
+    setUserEvents((prev) => ({ ...prev, [type]: [] }));
+  } finally {
+    setLoadingUserEvents(false);
+  }
+};
+
+
+  const fetchPurchasedTickets = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/tickets/purchased`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch purchased tickets");
+
+      setUserEvents((prev) => ({
+        ...prev,
+        purchasedTickets: Array.isArray(data?.tickets) ? data.tickets : [],
+      }));
+    } catch (err) {
+      console.error("Error fetching purchased tickets:", err);
+    }
+  };
+
+  const fetchSoldTickets = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/tickets/sold`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch sold tickets");
+
+      setUserEvents((prev) => ({
+        ...prev,
+        soldTickets: Array.isArray(data?.tickets) ? data.tickets : [],
+      }));
+    } catch (err) {
+      console.error("Error fetching sold tickets:", err);
+    }
+  };
+
+  const fetchUpcomingEvents = async () => {
+    try {
+      setLoadingUpcoming(true);
+      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/upcoming`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch upcoming events");
+
+      setUpcomingEvents(Array.isArray(data.events) ? data.events : []);
+    } catch (err) {
+      console.error("Error fetching upcoming events:", err);
+      setUpcomingEvents([]);
+    } finally {
+      setLoadingUpcoming(false);
+    }
+  };
+
+  const fetchNearbyEvents = async (lat, lng, radius = 25) => {
+    try {
+      setLoadingNearby(true);
+      const res = await fetch(
+        `${import.meta.env.VITE_EVENT_URL}/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch nearby events");
+
+      setNearbyEvents(Array.isArray(data.events) ? data.events : []);
+    } catch (err) {
+      console.error("Error fetching nearby events:", err);
+      setNearbyEvents([]);
+    } finally {
+      setLoadingNearby(false);
     }
   };
 
@@ -126,43 +204,25 @@ export const EventProvider = ({ children }) => {
     }
   };
 
-  const fetchUsersEvents = async (type, userId) => {
-    if (!userId) return;
 
-    try {
-      setLoadingUserEvents(true);
-      setError(null);
+  useEffect(() => {
+    if (user?._id) {
+      console.log("User in frontend:", user?._id);
+      console.log("User detected:", user._id);
+      fetchUsersEvents("hosting", user._id);
+      fetchUsersEvents("attending", user._id);
+      fetchUsersEvents("previous", user._id);
+      fetchPurchasedTickets();
+      fetchSoldTickets();
+    }else {
+    console.log("No user yet");
+  }
+  }, [user]);
 
-      const res = await fetch(`${import.meta.env.VITE_EVENT_URL}/${type}/${userId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch user events");
-
-      setUserEvents((prev) => ({ ...prev, [type]: data.events || [] }));
-    } catch (err) {
-      setError(err.message);
-      setUserEvents((prev) => ({ ...prev, [type]: [] }));
-    } finally {
-      setLoadingUserEvents(false);
-    }
-  };
 
   useEffect(() => {
     fetchAllEvents(query, filters);
   }, [query, filters]);
-
-  useEffect(() => {
-    if (user?._id) {
-      fetchUsersEvents("hosting", user._id);
-      fetchUsersEvents("attending", user._id);
-      fetchUsersEvents("previous", user._id);
-    }
-  }, [user]);
 
   return (
     <EventContext.Provider
@@ -186,6 +246,8 @@ export const EventProvider = ({ children }) => {
         fetchAllEvents,
         fetchSearchEvents,
         fetchUsersEvents,
+        fetchPurchasedTickets,
+        fetchSoldTickets,
       }}
     >
       {children}

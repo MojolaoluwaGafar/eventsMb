@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import SelectTicketModal from "../EventDetailsPageComponents/SelectTicketModal";
+import PaymentSuccessModal from "./PaymentSuccess";
 
 export default function PaymentCard({ event }) {
   const [showModal, setShowModal] = useState(false);
-  const { free, vip, regular, vipEnabled, regularEnabled } = event || {};
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [paymentData, setPaymentData] = useState({});
 
   const handleOpenModal = () => setShowModal(true);
+
+  const { free, vip, regular, vipEnabled, regularEnabled } = event || {};
 
   return (
     <div className="bg-black w-[220px] text-white rounded-md p-3">
@@ -41,6 +45,14 @@ export default function PaymentCard({ event }) {
         showModal={showModal}
         setShowModal={setShowModal}
         event={event}
+        setShowSuccessModal={setShowSuccessModal} 
+        setPaymentData={setPaymentData}
+      />
+
+      <PaymentSuccessModal
+        show={showSuccessModal}
+        setShow={setShowSuccessModal}
+        paymentData={paymentData}
       />
     </div>
   );

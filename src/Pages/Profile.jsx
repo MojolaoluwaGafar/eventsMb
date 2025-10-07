@@ -4,9 +4,17 @@ import { IoPencil } from "react-icons/io5";
 import AppLayout from "../Layouts/AppLayout";
 import Button from "../Components/Button";
 import { AuthContext } from "../Context/AuthContext";
+import { EventContext } from "../Context/EventContext";
+import { Link } from "react-router";
 
 export default function Profile() {
   const { user } = useContext(AuthContext);
+  const { userEvents, loadingUserEvents } = useContext(EventContext);
+  console.log("User events from context:", userEvents);
+
+if (loadingUserEvents) {
+  return <div>Loading your profile...</div>;
+}
 
   const getInitials = (fullName) => {
     if (!fullName) return "";
@@ -17,6 +25,11 @@ export default function Profile() {
       .join("")
       .toUpperCase();
   };
+
+const hostedCount = Array.isArray(userEvents?.hosting) ? userEvents.hosting.length : 0;
+const attendedCount = Array.isArray(userEvents?.attending) ? userEvents.attending.length : 0;
+const purchasedCount = Array.isArray(userEvents?.purchasedTickets) ? userEvents.purchasedTickets.length : 0;
+
 
   return (
     <AppLayout>
@@ -32,10 +45,11 @@ export default function Profile() {
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full rounded-full bg-gray-500 flex items-center justify-center text-black border-1 border-purple-800 font-bold">
+                <div className="w-full h-full rounded-full bg-gray-300 flex items-center justify-center text-black border border-purple-800 font-bold">
                   {getInitials(user?.fullName)}
                 </div>
               )}
+
               <button
                 aria-label="Edit profile picture"
                 className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-md text-gray-500 hover:text-[#9747FF]"
@@ -72,27 +86,30 @@ export default function Profile() {
             <hr className="border-gray-300" />
 
             <div className="flex justify-between">
-              <span className="text-gray-700">Events hosted</span>
-              <span className="font-medium">
-                {Array.isArray(user?.eventsHosted)
-                  ? user.eventsHosted.length
-                  : 0}
-              </span>
-            </div>
-            <hr className="border-gray-300" />
+  <span className="text-gray-700">Events hosted</span>
+  <span className="font-medium">{hostedCount}</span>
+</div>
+ <hr className="border-gray-300" />
 
-            <div className="flex justify-between">
-              <span className="text-gray-700">Events attended</span>
-              <span className="font-medium">
-                {Array.isArray(user?.eventsAttended)
-                  ? user.eventsAttended.length
-                  : 0}
-              </span>
-            </div>
+<div className="flex justify-between">
+  <span className="text-gray-700">Events attended</span>
+  <span className="font-medium">{attendedCount}</span>
+</div>
+ <hr className="border-gray-300" />
+
+<div className="flex justify-between">
+  <span className="text-gray-700">Tickets Purchased</span>
+  <span className="font-medium">{purchasedCount}</span>
+</div>
+
+            
             <hr className="border-gray-300 mb-6" />
+
           </article>
 
-          <Button content="Edit" className="my-4 w-[80px]" />
+          <Link to="/settings">
+            <Button content="Edit" className="my-4 w-[80px]" />
+          </Link>
         </section>
       </div>
     </AppLayout>

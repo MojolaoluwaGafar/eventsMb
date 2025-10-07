@@ -3,7 +3,7 @@ import EventsCard from "../EventsCard.jsx";
 import { EventContext } from "../../Context/EventContext";
 import { AuthContext } from "../../Context/AuthContext";
 import Loader from "../Loader.jsx";
-
+import { Link } from "react-router"
 export default function EventsNearYou() {
   const { fetchNearbyEvents, nearbyEvents, loadingNearby } =
     useContext(EventContext);
@@ -44,12 +44,23 @@ export default function EventsNearYou() {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <p className="text-gray-500 text-lg">
-          Oops! Please{" "}
-          <span className="font-semibold text-purple-800">log in</span> to see
-          events near you.
+       <div className="flex items-center py-5 px-5 lg:px-20">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center mb-5">
+          <p className="text-[30px] font-semibold">Events Near you</p>
+          <button
+            disabled
+            className="text-lg text-gray-400 cursor-not-allowed"
+          >
+            See All
+          </button>
+        </div>
+      <div className="flex flex-col items-center justify-center py-20">
+        <p className="text-gray-500 text-[25px]">
+          Oops! No events. Please <Link to="/auth/signIn"><span className="font-semibold text-purple-800">log in </span></Link>to see upcoming events.
         </p>
+      </div>
+      </div>
       </div>
     );
   }
@@ -57,7 +68,7 @@ export default function EventsNearYou() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-red-500 text-lg">{error}</p>
+        <p className="text-red-500 text-[25px]">{error}</p>
       </div>
     );
   }
@@ -73,7 +84,7 @@ export default function EventsNearYou() {
           </button>
         </div>
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-gray-800 text-lg">Oops! No events nearby right now.</p>
+        <p className="text-gray-800 text-[25px]"> <span className="text-purple-500 font-bold">Oops!</span>No events nearby right now.</p>
       </div>
        </div>
        </div>
