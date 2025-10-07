@@ -103,13 +103,13 @@ const purchasedCount = Array.isArray(userEvents?.purchasedTickets) ? userEvents.
 </div>
 
             
-            <hr className="border-gray-300 mb-6" />
+            {/* <hr className="border-gray-300 mb-6" /> */}
 
           </article>
 
-          <Link to="/settings">
+          {/* <Link to="/settings">
             <Button content="Edit" className="my-4 w-[80px]" />
-          </Link>
+          </Link> */}
         </section>
       </div>
     </AppLayout>
