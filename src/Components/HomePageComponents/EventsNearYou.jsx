@@ -56,7 +56,7 @@ export default function EventsNearYou() {
           </button>
         </div>
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-gray-500 text-[25px]">
+        <p className="text-gray-500 text-[18px] lg:text-[25px]">
           Oops! No events. Please <Link to="/auth/signIn"><span className="font-semibold text-purple-800">log in </span></Link>to see upcoming events.
         </p>
       </div>
@@ -68,7 +68,7 @@ export default function EventsNearYou() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-red-500 text-[25px]">{error}</p>
+        <p className="text-red-500 text-[18px] lg:text-[25px]">{error}</p>
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function EventsNearYou() {
           </button>
         </div>
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-gray-800 text-[25px]"> <span className="text-purple-500 font-bold">Oops!</span>No events nearby right now.</p>
+        <p className="text-gray-800 text-[18px] lg:text-[25px]"> <span className="text-purple-500 font-bold">Oops!</span>No events nearby right now.</p>
       </div>
        </div>
        </div>

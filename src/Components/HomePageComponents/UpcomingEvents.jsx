@@ -25,7 +25,7 @@ export default function UpcomingEvents() {
 
   if (error) {
     return (
-      <p className="text-red-500 text-[25px] text-center py-5">
+      <p className="text-red-500 text-[18px] lg:text-[25px] text-center py-5">
         {error || "Failed to load upcoming events."}
       </p>
     );
@@ -44,7 +44,7 @@ export default function UpcomingEvents() {
           </button>
         </div>
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-gray-500 text-[25px]">
+        <p className="text-gray-500 text-[18px] lg:text-[25px]">
           Oops! No events. Please <Link to="/auth/signIn"><span className="font-semibold text-purple-800">log in </span></Link>to see upcoming events.
         </p>
       </div>
@@ -66,7 +66,7 @@ export default function UpcomingEvents() {
           </button>
         </div>
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-gray-500 text-[25px]">
+        <p className="text-gray-500 text-[18px] lg:text-[25px]">
           No upcoming events at the moment.
         </p>
       </div>
