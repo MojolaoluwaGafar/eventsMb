@@ -14,13 +14,16 @@ import ComingSoon from "./Components/ComingSoon"
 import ProtectedRoute from "./Components/ProtectedRoute"
 import YourEventsPage from "./Pages/YourEventsPage"
 import Profile from "./Pages/Profile" 
+import { Suspense } from "react";
+import FallBackLoader from "./Components/Loader";
 
 function App() {
 
   return (
   <>
     <Router>
-      <Routes>
+      <Suspense fallback={<FallBackLoader />}>
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth/signUp" element={<SignUpPage />} />
         <Route path="/auth/signIn" element={<SignInPage />} />
@@ -37,6 +40,7 @@ function App() {
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
+      </Suspense>
     </Router>
   </>
   )
