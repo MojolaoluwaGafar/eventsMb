@@ -80,7 +80,7 @@ export default function Footer() {
             <p className="pt-4 w-full lg:w-[380px] text-lg">Stay connected and informed with our updates Subscribe to our newsletter for the latest updates on mental health tips, app features, and exclusive offers. Join our community to receive valuable insights and support right in your inbox</p>
             <form onSubmit={handleSubmit} className="flex w-full lg:w-[350px] bg-white rounded-md mt-4 py-2 px-2">
                 <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black w-[180px]" type="email" placeholder="Email" />
-                <Button disabled={isLoading} className="w-[130px] lg:w-[200px]" type="submit" content="Subscribe" />
+                <Button disabled={isLoading} className="w-[150px] lg:w-[200px]" type="submit" content="Subscribe" />
             </form>
             {errors.email && <span className="text-red-500 font-semibold text-lg">{errors.email}</span>}
         </div>
