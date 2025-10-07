@@ -57,7 +57,7 @@ export default function EventsPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { totalPages: tp, currentPage: cp } = await fetchAllEvents("", {}, currentPage, 5); // 5 events per page
+      const { totalPages: tp, currentPage: cp } = await fetchAllEvents("", {}, currentPage, 9);
       setTotalPages(tp);
       setCurrentPage(cp);
     };
