@@ -20,7 +20,7 @@ export default function YourEventsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedEvents, setPaginatedEvents] = useState([]);
 
-  const EVENTS_PER_PAGE = 6;
+  const EVENTS_PER_PAGE = 9;
 
   const btns = [
     { id: 1, content: "Hosting", type: "hosting" },

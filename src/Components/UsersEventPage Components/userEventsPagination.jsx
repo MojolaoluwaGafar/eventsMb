@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Pagination({ currentPage, totalPages, onPrevious, onNext }) {
   return (
-    <nav className="flex justify-between items-center px-5 lg:px-20 pb-5" aria-label="Pagination">
+    <nav className="flex justify-between items-center" aria-label="Pagination">
       <button
         onClick={onPrevious}
         disabled={currentPage === 1}
