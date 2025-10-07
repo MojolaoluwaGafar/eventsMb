@@ -75,12 +75,12 @@ export default function Footer() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.3 }} className="container lg:flex mx-auto items-center justify-between">
          
-         <div className="branding max-w-[280px]">
+         <div className="branding max-w-[350px]">
             <img src={FooterLogo} alt="Logo" />
             <p className="pt-4 w-full lg:w-[380px] text-lg">Stay connected and informed with our updates Subscribe to our newsletter for the latest updates on mental health tips, app features, and exclusive offers. Join our community to receive valuable insights and support right in your inbox</p>
-            <form onSubmit={handleSubmit} className="flex w-[380px] bg-white rounded-md mt-4 py-2 px-2">
-                <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black" type="email" placeholder="Email" />
-                <Button disabled={isLoading} className="w-[150px] lg:w-[200px]" type="submit" content="Subscribe" />
+            <form onSubmit={handleSubmit} className="flex w-full lg:w-[350px] bg-white rounded-md mt-4 py-2 px-2">
+                <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black w-[180px]" type="email" placeholder="Email" />
+                <Button disabled={isLoading} className="w-[130px] lg:w-[200px]" type="submit" content="Subscribe" />
             </form>
             {errors.email && <span className="text-red-500 font-semibold text-lg">{errors.email}</span>}
         </div>
