@@ -5,6 +5,7 @@ import Loader from '../Components/Loader'
 import { AnimatePresence } from "framer-motion"
 import AllEvents from "../Components/AllEventsPageComponents/AllEvents"
 import {EventContext} from "../Context/EventContext"
+import Pagination from "../Components/AllEventsPageComponents/Pagination"
 export default function EventsPage() {
   const [pageLoading, setPageLoading] = useState(true);
   const { allEvents, searchResults } = useContext(EventContext);
