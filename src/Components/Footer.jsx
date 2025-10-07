@@ -78,7 +78,7 @@ export default function Footer() {
          <div className="branding max-w-[280px]">
             <img src={FooterLogo} alt="Logo" />
             <p className="pt-4 w-full lg:w-[380px] text-lg">Stay connected and informed with our updates Subscribe to our newsletter for the latest updates on mental health tips, app features, and exclusive offers. Join our community to receive valuable insights and support right in your inbox</p>
-            <form onSubmit={handleSubmit} className="flex w-xs lg:w-[350px] bg-white rounded-md mt-4 py-2 px-2">
+            <form onSubmit={handleSubmit} className="flex w-[330px] lg:w-[350px] bg-white rounded-md mt-4 py-2 px-2">
                 <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black" type="email" placeholder="Email" />
                 <Button disabled={isLoading} className="w-[150px] lg:w-[200px]" type="submit" content="Subscribe" />
             </form>
