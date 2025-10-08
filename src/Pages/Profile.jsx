@@ -85,6 +85,12 @@ const purchasedCount = Array.isArray(userEvents?.purchasedTickets) ? userEvents.
             </div>
             <hr className="border-gray-300" />
 
+             <div className="flex justify-between">
+              <span className="text-gray-700">Password</span>
+              <div ><span className="font-medium text-purple-800">**********</span></div>
+            </div>
+            <hr className="border-gray-300" />
+
             <div className="flex justify-between">
   <span className="text-gray-700">Events hosted</span>
   <span className="font-medium">{hostedCount}</span>
@@ -98,7 +104,7 @@ const purchasedCount = Array.isArray(userEvents?.purchasedTickets) ? userEvents.
  <hr className="border-gray-300" />
 
 <div className="flex justify-between">
-  <span className="text-gray-700">Tickets Purchased</span>
+  <span className="text-gray-700">Total Tickets Purchased</span>
   <span className="font-medium">{purchasedCount}</span>
 </div>
 

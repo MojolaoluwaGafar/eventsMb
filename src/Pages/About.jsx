@@ -51,7 +51,6 @@ export default function AboutPage() {
           />
         </section>
 
-        {/* Team Section */}
         <section className="text-center space-y-6">
           <h2 className="text-3xl font-semibold text-purple-600">Meet Our Team</h2>
           <p className="text-gray-700 leading-relaxed text-lg max-w-4xl mx-auto">

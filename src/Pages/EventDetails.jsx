@@ -18,8 +18,8 @@ export default function EventDetails() {
   return (
     <>
     <AppLayout>
-      <div className="flex items-center px-5 lg:px-20">
-         <div className="container mx-auto my-6 flex items-center gap-1 text-xl">
+      <div className="flex items-center px-8 lg:px-20">
+         <div className="container mx-auto my-6 flex items-center gap-1 text-[15px] md:text-lg">
         <Link to="/"><p>Home</p></Link>
         <span className="text-purple-800 text-[12px]"><FaGreaterThan /></span>
         <Link to="/events"><p  className="font-semibold">Event</p></Link>

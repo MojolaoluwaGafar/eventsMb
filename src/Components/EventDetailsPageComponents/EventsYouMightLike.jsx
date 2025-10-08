@@ -22,7 +22,7 @@ export default function EventsYouMightLike() {
             See All
           </button>
         </div>
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {randomEvents.map((event) => (
             <EventsCard key={event.id || event._id} {...event} />
           ))}

@@ -124,7 +124,7 @@ export default function YourEventsPage() {
         <div className="container mx-auto">
           <h1 className="text-start text-2xl font-bold pb-5">Your Events</h1>
 
-          <div className="flex flex-wrap w-full lg:gap-2 justify-between rounded-md my-3 mx-auto">
+          <div className="flex flex-wrap md:flex:nowrap w-full lg:gap-2 justify-between rounded-md my-3 mx-auto">
             {btns.map((btn) => {
               const isActive = btn.id === activeBtn;
               const btnClass = isActive

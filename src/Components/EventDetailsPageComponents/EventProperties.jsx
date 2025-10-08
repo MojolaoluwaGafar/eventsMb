@@ -40,13 +40,13 @@ export default function EventProperties({
       <div className="container mx-auto">
         <img className="w-full h-[345px] rounded-lg" src={image} alt={title} />
 
-        <div className="lg:flex mt-5 mb-3 justify-between">
+        <div className="md:flex mt-5 mb-3 justify-between">
           <div>
-            <div className="flex text-[20px] lg:text-[30px] py-2 gap-2 items-center font-semibold">
+            <div className="flex text-[18px] lg:text-[30px] py-2 gap-2 items-center font-semibold">
               <FaCalendarAlt /> {date ? moment(date).format("dddd, MMMM Do YYYY") : "No date provided"} {startTime && ` - ${startTime}`}
             </div>
 
-            <div className="flex lg:py-2 text-[20px] lg:text-[30px] gap-2 items-center font-semibold">
+            <div className="flex lg:py-2 text-[18px] lg:text-[30px] gap-2 items-center font-semibold">
               <FaLocationDot /> {location || "Online"}
             </div>
 
@@ -62,7 +62,7 @@ export default function EventProperties({
             </div>
 
             <h1 className="text-2xl py-2 lg:text-5xl font-semibold">{title}</h1>
-            <p className="text-[23px]">{description}</p>
+            <p className="text-[18px] lg:text-[21px] pb-3 md:pb-0">{description}</p>
           </div>
 
           <div>
