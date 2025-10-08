@@ -17,7 +17,7 @@ export default function CreateEventPage() {
   return (
     <>
     <AppLayout>
-       <div className="flex items-center px-5 py-2 lg:px-20">
+       <div className="flex items-center px-8 py-2 lg:px-20">
         <div className="container mx-auto">
              <h1 className="text-[30px] font-semibold">Create event</h1>
              {showModal && ( <CreateEventsSuccessModal showModal={showModal} setShowModal={setShowModal} />)}

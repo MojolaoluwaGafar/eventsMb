@@ -32,10 +32,10 @@ export default function UpcomingEvents() {
   }
   if (!user) {
     return (
-       <div className="flex items-center py-5 px-5 lg:px-20">
+       <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Upcoming Events</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Upcoming Events</p>
           <button
             disabled
             className="text-lg text-gray-400 cursor-not-allowed"
@@ -54,10 +54,10 @@ export default function UpcomingEvents() {
   }
   if (upcomingEvents.length === 0) {
     return (
-       <div className="flex items-center py-5 px-5 lg:px-20">
+       <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Upcoming Events</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Upcoming Events</p>
           <button
             disabled
             className="text-lg text-gray-400 cursor-not-allowed"
@@ -76,10 +76,10 @@ export default function UpcomingEvents() {
   }
 
   return (
-    <div className="flex items-center py-5 px-5 lg:px-20">
+    <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Upcoming Events</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Upcoming Events</p>
           <button
             disabled
             className="text-lg text-gray-400 cursor-not-allowed"
@@ -88,7 +88,7 @@ export default function UpcomingEvents() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {upcomingEvents.slice(0, 3).map((event) => (
             <EventsCard key={event._id} {...event} />
           ))}

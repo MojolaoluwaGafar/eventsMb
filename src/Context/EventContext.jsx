@@ -8,7 +8,7 @@ export const EventProvider = ({ children }) => {
   const { user, token } = useContext(AuthContext);
 
   console.log("EventProvider mounted");
-console.log("User from AuthContext:", user);
+  console.log("User from AuthContext:", user);
 
 
   const [userEvents, setUserEvents] = useState({

@@ -10,7 +10,8 @@ const SignInPage = lazy(() => import("./src/Pages/AuthPages/SignInPage.jsx"));
 const ForgotPassword = lazy(() => import("./src/Pages/AuthPages/ForgotPassword.jsx"));
 const ResetPassword = lazy(() => import("./src/Pages/AuthPages/ResetPassword.jsx"));
 const YourEventsPage = lazy(() => import("./src/Pages/YourEventsPage.jsx"));
-
+const AboutPage = lazy(()=> import("./src/Pages/About.jsx"))
+const ContactPage = lazy(()=> import("./src/Pages/Contact.jsx"))
 export {
   Homepage,
   EventsPage,
@@ -22,4 +23,6 @@ export {
   ForgotPassword,
   ResetPassword,
   YourEventsPage,
+  AboutPage,
+  ContactPage,
 };

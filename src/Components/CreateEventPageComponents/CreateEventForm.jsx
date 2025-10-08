@@ -140,7 +140,7 @@ export default function CreateEventForm() {
 
 
   return (
-    <>
+    <div>
       {isPreviewing ?
       (
          <EventPreview
@@ -360,6 +360,6 @@ export default function CreateEventForm() {
       )}
       <Modal showModal={showModal}
         setShowModal={setShowModal}  />
-    </>
+    </div>
   )
 }

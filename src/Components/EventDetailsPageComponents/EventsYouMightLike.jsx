@@ -14,7 +14,7 @@ export default function EventsYouMightLike() {
   }, [allEvents]);
 
   return (
-    <div className="flex items-center py-5 px-5 lg:px-20">
+    <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold py-3">Other Events You Might Like</p>

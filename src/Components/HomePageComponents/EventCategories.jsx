@@ -18,14 +18,14 @@ export default function EventCategories() {
   ];
 
   return (
-    <div className="flex items-center px-5 lg:px-20">
+    <div className="flex items-center px-8 lg:px-20">
       <div className="container mx-auto">
       <div className="flex justify-between items-center">
-        <p className="text-[30px] font-semibold">Events Categories</p>
+        <p className="text-[25px] lg:text-[30px] font-semibold">Events Categories</p>
         <button onClick={handleSeeAll} className="text-lg">See all</button>
       </div>
 
-      <div className="flex flex-wrap gap-5 lg:flex-nowrap my-4">
+      <div className="flex flex-wrap gap-5 md:flex-nowrap my-4">
         {categories.map((one) => (
           <div className="relative w-full transition-shadow hover:shadow-lg" key={one.id}>
             <img

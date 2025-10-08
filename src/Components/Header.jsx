@@ -12,13 +12,16 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
-
+import { MdOutlineGroups2 } from "react-icons/md";
+import { MdContactPhone } from "react-icons/md";
+import { useNavigate } from "react-router"
 
 export default function Header() {
   const {user, logout } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getInitials = (fullName)=>{
     if (!fullName) return "";
@@ -38,18 +41,18 @@ export default function Header() {
       to: "/profile",
       icon: <LuUserRoundPen className="text-dark" />
     },
-    // {
-    //   id : 3,
-    //   content : "Settings",
-    //   to: "/setting",
-    //   icon: <FiSettings className="text-dark" />
-    // },
-    // {
-    //   id : 4,
-    //   content : "Help",
-    //   to: "/help",
-    //   icon: <MdOutlineHelpOutline className="text-dark" />
-    // }
+    {
+      id : 3,
+      content : "About",
+      to: "/about",
+      icon: <MdOutlineGroups2 className="text-dark" />
+    },
+    {
+      id : 4,
+      content : "Contact",
+      to: "/contact",
+      icon: <MdContactPhone className="text-dark" />
+    }
   ]
 
   const UserMenu =()=>{
@@ -57,6 +60,7 @@ export default function Header() {
     const handleLogout=()=>{
       logout()
       setIsOpen(false)
+      navigate("/auth/signIn")
     }
     return (
       <div onClick={() => setIsOpen(!isOpen)}  className="flex items-center">
@@ -82,7 +86,7 @@ export default function Header() {
 
 
   return (
-    <header className="sticky top-0 bg-white border-b-2 border-b-gray-300 px-5 lg:px-20 z-100 ">
+    <header className="sticky top-0 bg-white border-b-2 border-b-gray-300 px-8 lg:px-20 z-100 ">
       <motion.div  initial={{ opacity: 0, y: -10 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.3 }}
@@ -91,12 +95,12 @@ export default function Header() {
           <img src={Logo} alt="Logo"/>
         </Link>
 
-        <nav className="hidden md:flex gap-10">
+        <nav className="hidden md:flex gap-5">
           {links.map((link) => (
             <Link
               key={link.id}
               to={link.to}
-              className={ location.pathname === link.to ? "text-[22px] underline font-bold text-purple-500 hover:text-purple-900" : "text-[22px] hover:underline"}
+              className={ location.pathname === link.to ? "text-[15px] md:text-[18px] lg:text-[22px] underline font-bold text-purple-500 hover:text-purple-900" : "text-[15px] md:text-[18px] lg:text-[22px] hover:underline"}
             >
               {link.pathName}
             </Link>

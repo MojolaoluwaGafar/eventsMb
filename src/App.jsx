@@ -16,6 +16,8 @@ import YourEventsPage from "./Pages/YourEventsPage"
 import Profile from "./Pages/Profile" 
 import { Suspense } from "react";
 import FallBackLoader from "./Components/Loader";
+import AboutPage from "./Pages/About"
+import ContactPage from "./Pages/Contact"
 
 function App() {
 
@@ -38,6 +40,8 @@ function App() {
         <Route path="/your-events" element={<ProtectedRoute><YourEventsPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/coming-soon" element={<ComingSoon />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       </Suspense>

@@ -20,8 +20,8 @@ export default function Footer() {
     links: [
       { label: "Home", to: "/" },
       { label: "Events", to: "/events" },
-      // { label: "About", to: "/coming-soon" },
-      // { label: "Contact", to: "/coming-soon" }
+      { label: "About", to: "/about" },
+      { label: "Contact", to: "/contact" }
     ]
   }
 ];
@@ -41,6 +41,8 @@ export default function Footer() {
   }
 
   const handleSubmit= async (e)=>{
+    console.log("subscription hit");
+    
     e.preventDefault();
     if (!formValidate()) return;
     setErrors("");
@@ -51,9 +53,13 @@ export default function Footer() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
+      console.log(response);
+      
       const data = await response.json();
        if (!response.ok) throw new Error(data.message || "Subscription failed");
       setFormData({ email: "" }); 
+      console.log(data);
+      
       return data;
     } catch (error) {
       console.log(error);
@@ -70,17 +76,17 @@ export default function Footer() {
 
         
   return (
-    <footer className=" bg-[#0E021E] lg:flex lg:justify-between lg:items-center px-5 lg:px-20 py-10 lg:py-15 text-white ">
+    <footer className=" bg-[#0E021E] md:flex md:justify-between md:items-center px-8 lg:px-20 py-10 lg:py-15 text-white ">
        <motion.div initial={{ opacity: 0, y: -10 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.3 }} className="container lg:flex mx-auto items-center justify-between">
+  transition={{ duration: 0.3 }} className="container md:flex mx-auto items-center justify-between">
          
          <div className="branding max-w-[350px]">
             <img src={FooterLogo} alt="Logo" />
-            <p className="pt-4 w-full lg:w-[380px] text-lg">Stay connected and informed with our updates Subscribe to our newsletter for the latest updates on mental health tips, app features, and exclusive offers. Join our community to receive valuable insights and support right in your inbox</p>
-            <form onSubmit={handleSubmit} className="flex w-full lg:w-[350px] bg-white rounded-md mt-4 py-2 px-2">
-                <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black w-[200px]" type="email" placeholder="Email" />
-                <Button disabled={isLoading} className="w-[150px] lg:w-[200px]" type="submit" content={isLoading ? "Subscribing" : "Subscribe"} />
+            <p className="pt-4 w-full md:w-[320px] lg:w-[380px] text-lg md:text-sm lg:text-lg">Stay connected and informed with our updates Subscribe to our newsletter for the latest updates on mental health tips, app features, and exclusive offers. Join our community to receive valuable insights and support right in your inbox</p>
+            <form onSubmit={handleSubmit} className="flex w-full md:w-[300px] lg:w-[350px] bg-white rounded-md mt-4 py-1 lg:py-2 px-2">
+                <input onChange={handleChange} name="email" value={formData.email} className="py-2 px-2 text-black w-[180px]" type="email" placeholder="Email" />
+                <Button disabled={isLoading} className="w-[100px] lg:w-[200px] md:text-sm lg:text-lg" type="submit" content={isLoading ? "Subscribing" : "Subscribe"} />
             </form>
             {errors.email && <span className="text-red-500 font-semibold text-lg">{errors.email}</span>}
         </div>
@@ -94,7 +100,7 @@ export default function Footer() {
               <Link
                 key={i}
                 to={link.to}
-                className="hover:underline hover:text-purple-500 cursor-pointer py-1 block">
+                className="hover:underline hover:text-purple-500 md:text-sm lg:text-lg cursor-pointer py-1 block">
                   {link.label}
                </Link>
                 ))}

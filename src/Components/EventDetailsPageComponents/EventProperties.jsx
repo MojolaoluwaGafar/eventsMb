@@ -36,7 +36,7 @@ export default function EventProperties({
   };
 
   return (
-    <div className="flex items-center px-5 lg:px-20">
+    <div className="flex items-center px-8 lg:px-20">
       <div className="container mx-auto">
         <img className="w-full h-[345px] rounded-lg" src={image} alt={title} />
 

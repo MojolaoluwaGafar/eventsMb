@@ -33,7 +33,7 @@ const purchasedCount = Array.isArray(userEvents?.purchasedTickets) ? userEvents.
 
   return (
     <AppLayout>
-      <div className="flex flex-col px-5 py-3 lg:px-20">
+      <div className="flex flex-col px-8 py-3 lg:px-20">
         <section className="container mx-auto w-full max-w-sm p-2">
           <header className="flex gap-4 my-4">
             <div className="relative w-12 h-12">

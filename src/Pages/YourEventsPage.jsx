@@ -120,7 +120,7 @@ export default function YourEventsPage() {
 
   return (
     <AppLayout>
-      <div className="flex-row items-center py-5 px-5 lg:px-20">
+      <div className="flex-row items-center py-5 px-8 lg:px-20">
         <div className="container mx-auto">
           <h1 className="text-start text-2xl font-bold pb-5">Your Events</h1>
 
@@ -128,8 +128,8 @@ export default function YourEventsPage() {
             {btns.map((btn) => {
               const isActive = btn.id === activeBtn;
               const btnClass = isActive
-                ? "h-[50px] lg:h-[60px] w-[95px] lg:w-[270px] bg-black text-white lg:text-lg font-semibold px-4 py-2 rounded-md flex items-center justify-center"
-                : "h-[50px] lg:h-[60px] w-[95px] lg:w-[270px] text-black lg:text-lg font-semibold border-2 border-black px-4 py-2 rounded-md flex items-center justify-center";
+                ? "h-[50px] lg:h-[60px] w-[95px] md:w-[150px] lg:w-[270px] bg-black text-white lg:text-lg font-semibold px-4 py-2 rounded-md flex items-center justify-center"
+                : "h-[50px] lg:h-[60px] w-[95px] md:w-[150px] lg:w-[270px] text-black lg:text-lg font-semibold border-2 border-black px-4 py-2 rounded-md flex items-center justify-center";
               return (
                 <button
                   onClick={() => setActiveBtn(btn.id)}
@@ -151,7 +151,7 @@ export default function YourEventsPage() {
 
 function EventGrid({ events }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {events.map((event) => (
         <EventsCard key={event._id} {...event} />
       ))}

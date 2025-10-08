@@ -11,7 +11,7 @@ export default function Pagination({ currentPage, totalPages, onPrevious, onNext
         Previous
       </button>
 
-      <span className="text-lg font-medium">
+      <span className="text-sm font-medium">
         Page <span className="font-bold">{currentPage}</span> of <span className="font-bold">{totalPages}</span>
       </span>
 

@@ -38,34 +38,34 @@ export default function EventsCard({
         <img
           src={image}
           alt={title ? `${title} event poster` : "Event poster"}
-          className="rounded-md w-full h-[200px]"
+          className="rounded-md w-full h-[150px]"
           loading="lazy"
         />
-          <h3 className="text-lg pt-1 my-auto font-semibold">{title || "No title"}</h3>
+          <h3 className="text-[16px] pt-1 my-auto font-semibold">{title || "No title"}</h3>
         <div className="mt-2 capitalize">
-          <p className="text-lg">
+          <p className="text-[13px]">
             <span className="font-semibold">Host: <span>{hostName}</span></span>
           </p>
-          <p className="mb-0">
-            <span className="font-semibold text-lg mt-3 capitalize">
+          <p className="mb-0 text-[13px]">
+            <span className="font-semibold text-[13px] mt-3 capitalize">
               Category:
             </span>
             {displayedCategory}
           </p>
-          <div className="flex items-center text-lg gap-2">
+          <div className="flex items-center text-[13px] gap-2">
             <FaLocationDot />
             <span>{location || "Online"}</span>
           </div>
-          <div className="flex items-center text-lg gap-2">
+          <div className="flex items-center text-[13px] gap-2">
             <FaCalendarAlt /> <span>{formattedDate}</span>
           </div>
-          <div className="flex justify-between items-center mt-2">
+          <div className="flex justify-between items-center mt-1">
             {free ? (
-              <div className="text-lg flex items-center gap-2">
+              <div className="text-[13px] flex items-center gap-2 font-semibold">
                 <HiTicket /> <span>Free</span>
               </div>
             ) : (
-              <div className="flex gap-2 items-center text-lg font-semibold">
+              <div className="flex gap-2 items-center text-[13px] font-semibold">
                 <HiTicket />
                 <span>
                   {vipCount > 0 && "VIP"}

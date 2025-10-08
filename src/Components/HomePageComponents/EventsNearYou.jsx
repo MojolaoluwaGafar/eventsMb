@@ -44,10 +44,10 @@ export default function EventsNearYou() {
 
   if (!user) {
     return (
-       <div className="flex items-center py-5 px-5 lg:px-20">
+       <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Events Near you</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Events Near you</p>
           <button
             disabled
             className="text-lg text-gray-400 cursor-not-allowed"
@@ -75,10 +75,10 @@ export default function EventsNearYou() {
 
   if (locationFetched && nearbyEvents?.length === 0) {
     return (
-       <div className="flex items-center py-5 px-5 lg:px-20">
+       <div className="flex items-center py-5 px-8 lg:px-20">
         <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Events Near You</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Events Near You</p>
           <button disabled className="text-lg text-gray-400 cursor-not-allowed">
             See All
           </button>
@@ -92,16 +92,16 @@ export default function EventsNearYou() {
   }
 
   return (
-    <div className="flex items-center py-5 px-5 lg:px-20">
+    <div className="flex items-center py-5 px-8 lg:px-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-[30px] font-semibold">Events Near You</p>
+          <p className="text-[25px] lg:text-[30px] font-semibold">Events Near You</p>
           <button disabled className="text-lg text-gray-400 cursor-not-allowed">
             See All
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {nearbyEvents.slice(0, 3).map((event) => (
             <EventsCard key={event._id} {...event} />
           ))}
