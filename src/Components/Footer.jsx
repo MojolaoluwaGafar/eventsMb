@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FiYoutube } from "react-icons/fi";
 import { Link } from "react-router"
 import { motion } from "framer-motion"
-
+import {toast} from "react-toastify"
 
 export default function Footer() {
     const [formData, setFormData] = useState({email : ""})
@@ -20,8 +20,8 @@ export default function Footer() {
     links: [
       { label: "Home", to: "/" },
       { label: "Events", to: "/events" },
-      { label: "About", to: "/about" },
-      { label: "Contact", to: "/contact" }
+      { label: "About us", to: "/about" },
+      { label: "Contact us", to: "/contact" }
     ]
   }
 ];
@@ -48,25 +48,25 @@ export default function Footer() {
     setErrors("");
     setIsLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/subscribe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-      console.log(response);
-      
-      const data = await response.json();
-       if (!response.ok) throw new Error(data.message || "Subscription failed");
-      setFormData({ email: "" }); 
-      console.log(data);
-      
-      return data;
-    } catch (error) {
-      console.log(error);
-    }finally{
-      setIsLoading(false)
-    }
-  }
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/subscribe`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || "Subscription failed");
+
+  toast.success(data.message);
+  setFormData({ email: "" });
+  console.log(data);
+} catch (error) {
+  console.log(error);
+  toast.error(error.message || "Subscription failed!");
+} finally {
+  setIsLoading(false);
+}
+};
 
     const socialMediaLogos = [
         {

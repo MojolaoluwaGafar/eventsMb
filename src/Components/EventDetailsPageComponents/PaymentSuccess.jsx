@@ -13,7 +13,7 @@ export default function PaymentSuccessModal({ show, setShow, paymentData }) {
       const timer = setTimeout(() => {
         setShow(false);
         navigate(`/event/${eventId}`);
-      }, 5000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [show, navigate, eventId, setShow]);

@@ -61,9 +61,15 @@ export default function YourEventsPage() {
   };
 
   const renderContent = () => {
-    if (loadingUserEvents) return <Loader />;
+    if (loadingUserEvents) return <Loader height="150px" />;
     if (!loadingUserEvents && !userEvents[activeType]?.length && !error)
-      return <NoEventMsg text="Loading your events..." />;
+      return <Loader height="150px" />;
+    if (!userEvents[activeType]?.length) {
+      return <><p className="text-center mx-auto text-lg">no events</p></>
+    }
+    if(error){
+      console.log(error)
+    }
 
     switch (activeType) {
       case "hosting":

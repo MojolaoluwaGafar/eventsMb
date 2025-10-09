@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios"
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-
   useEffect(() => {
   const syncAuth = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -86,6 +87,17 @@ const login = async (formData) => {
   return data;
 };
 
+ const googleAuth = async (tokenResponse) => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/googleAuth`,
+      { token: tokenResponse.access_token }
+    );
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    localStorage.setItem("token", res.data.token);
+    setUser(res.data.user);
+    setToken(res.data.token);
+  };
+
   // Logout function
   const logout = () => {
   setUser(null);
@@ -97,7 +109,7 @@ const login = async (formData) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider value={{ user, token, login, register, logout, googleAuth }}>
       {children}
     </AuthContext.Provider>
   );

@@ -11,9 +11,11 @@ import {useNavigate} from "react-router"
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify"
+import { useGoogleLogin } from "@react-oauth/google";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignUpPage() {
-  const { register } = useContext(AuthContext);
+  const { register, googleAuth } = useContext(AuthContext);
   const [showPassword, setShowPassword]= useState(false)
   const [showConfirmPassword, setShowConfirmPassword]= useState(false)
   const toggleShowPassword= ()=> {setShowPassword(!showPassword)}
@@ -86,12 +88,26 @@ const handleSubmit = async (e) => {
   }
 };
 
+  const googleSignup = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        await googleAuth(tokenResponse);
+        toast.success("Google Sign-in successful!", { position: "top-center" });
+        navigate("/");
+      } catch (err) {
+        console.error("Google login failed", err);
+        toast.error("Google login failed!", { position: "top-center" });
+      }
+    },
+    onError: () => toast.error("Google Signup Failed", { position: "top-center" }),
+  });
+
 
   return (
     <AuthLayout image={signInImage}>
         <div className="flex flex-col items-center justify-center mx-auto">
             <Link to="/"><img src={Logo} alt="" /></Link>
-           <form onSubmit={handleSubmit} className="flex flex-col mx-auto px-10 py-2">
+           <form onSubmit={handleSubmit} className="flex flex-col mx-auto px-10 lg:px-0 lg:w-[448px]">
             <Typography content="Create Account" className="font-extrabold text-2xl" />
             <Typography content="Let’s get you started so you can start joining and creating events" />
 
@@ -119,7 +135,8 @@ const handleSubmit = async (e) => {
             </div>
             {errors.checkbox && <span className="text-red-700 font-semibold">{errors.checkbox}</span>}
             {errors.general && <span className="text-red-700 font-semibold">{errors.general}</span>}
-             <Button disabled={isLoading} className="my-2" type="submit" content={isLoading ? "Signing Up" : "Sign up"} />
+            <Button disabled={isLoading} className="my-2 lg:w-[448px]" type="submit" content={isLoading ? "Signing Up" : "Sign up"} />
+            <button type="submit" onClick={googleSignup} className="border-1 border-black lg:w-[448px] rounded-md mt-1 flex items-center justify-center h-[40px] gap-2">Sign up with<span className="font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-transparent bg-clip-text"><FcGoogle size={20} /></span></button>
             <p className="font-bold">Already have an account? <Link to="/auth/signIn"><span className="text-purple-500">Sign in</span></Link></p>
            </form>
 

@@ -244,6 +244,22 @@ const fetchUsersEvents = async (type, userId) => {
     }
   };
 
+  const refreshUserEvents = async (userId, token) => {
+  if (!userId || !token) return;
+  console.log("Refreshing all user events...");
+
+  await Promise.all([
+    fetchUsersEvents("hosting", userId),
+    fetchUsersEvents("attending", userId),
+    fetchUsersEvents("previous", userId),
+    fetchPurchasedTickets(),
+    fetchSoldTickets(),
+  ]);
+
+  console.log("✅ User events refreshed");
+};
+
+
 
   useEffect(() => {
     if (user?._id) {
@@ -288,6 +304,7 @@ const fetchUsersEvents = async (type, userId) => {
         fetchUsersEvents,
         fetchPurchasedTickets,
         fetchSoldTickets,
+        refreshUserEvents, 
       }}
     >
       {children}

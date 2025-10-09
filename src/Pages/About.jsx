@@ -38,7 +38,7 @@ export default function AboutPage() {
         <section className="flex flex-col-reverse md:flex-row items-center gap-8">
           <div className="lg:w-1/2 space-y-4">
             <h2 className="text-3xl font-semibold text-purple-600">Our Vision</h2>
-            <p className="text-gray-700 leading-relaxed text-[12px] sm:text-center md:text-start text-lg">
+            <p className="leading-relaxed sm:text-center md:text-start text-[12px] lg:text-lg">
               We envision a world where creating and attending events is effortless. 
               Our vision is to build a vibrant community where people can share experiences, discover new connections, 
               and enjoy life to the fullest — all while having a platform that makes every step easy and intuitive.

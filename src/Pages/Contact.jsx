@@ -11,15 +11,33 @@ export default function ContactPage() {
     email: "",
     message: "",
   });
-  const [ isLoading, setIsLoading ] = useState(true)
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({...errors})
   };
+  const formValidate= ()=>{
+    const { name,email,message } = formData;
+    const newErrors = {};
+    if (!name.trim()) {
+      newErrors.name= "Name is required"
+    }
+    if (!email.trim()) {
+        newErrors.email = "Email is required"
+    }
+    if (!message.trim()) {
+        newErrors.message = "Message is required"
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formValidate()) return;
     setIsLoading(true)
     try {
     if (!formData.name || !formData.email || !formData.message) {
@@ -41,8 +59,8 @@ export default function ContactPage() {
        console.log(error);
        toast.error("Message failed to send") 
     }finally{
-    setFormData({ name: "", email: "", message: "" });
     setIsLoading(false)
+    setFormData({ name: "", email: "", message: "" });
     }
 
   };
@@ -100,6 +118,7 @@ export default function ContactPage() {
                 placeholder="Your Name"
                 className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
               />
+              {errors.name && <p className="text-red-500 font-semibold">{errors.name}</p>}
               <input
                 type="email"
                 name="email"
@@ -108,6 +127,7 @@ export default function ContactPage() {
                 placeholder="Your Email"
                 className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
               />
+              {errors.email && <p className="text-red-500 font-semibold">{errors.email}</p>}
               <textarea
                 name="message"
                 value={formData.message}
@@ -115,9 +135,11 @@ export default function ContactPage() {
                 placeholder="Your Message"
                 className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none h-40 resize-none"
               />
+              {errors.message && <p className="text-red-500 font-semibold">{errors.message}</p>}
               <Button
                 type="submit"
-                content={isLoading ? "Sending" : "Send Message"}
+                disabled={isLoading}
+                content={isLoading ? "Sending" : "Send a message"}
                 className="w-full py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition"
               />
             </form>

@@ -33,26 +33,38 @@ export default function Header() {
       id : 1,
       content : "Your Events",
       to: "/your-events",
-      icon: <LuCalendarRange className="text-dark" />
+      icon: <LuCalendarRange className="text-dark" />,
     },
      {
       id : 2,
       content : "Profile",
       to: "/profile",
-      icon: <LuUserRoundPen className="text-dark" />
+      icon: <LuUserRoundPen className="text-dark" />,
     },
     {
-      id : 3,
-      content : "About",
-      to: "/about",
-      icon: <MdOutlineGroups2 className="text-dark" />
+      id: 3,
+      content : "Settings",
+      to: "/coming-soon",
+      icon: <FiSettings className="text-dark" />,
     },
     {
-      id : 4,
-      content : "Contact",
-      to: "/contact",
-      icon: <MdContactPhone className="text-dark" />
+      id: 4,
+      content : "help",
+      to: "/coming-soon",
+      icon: <MdOutlineHelpOutline />,
     }
+    // {
+    //   id : 3,
+    //   content : "About",
+    //   to: "/about",
+    //   icon: <MdOutlineGroups2 className="text-dark" />
+    // },
+    // {
+    //   id : 4,
+    //   content : "Contact",
+    //   to: "/contact",
+    //   icon: <MdContactPhone className="text-dark" />
+    // }
   ]
 
   const UserMenu =()=>{
@@ -100,7 +112,7 @@ export default function Header() {
             <Link
               key={link.id}
               to={link.to}
-              className={ location.pathname === link.to ? "text-[15px] md:text-[18px] lg:text-[22px] underline font-bold text-purple-500 hover:text-purple-900" : "text-[15px] md:text-[18px] lg:text-[22px] hover:underline"}
+              className={ location.pathname === link.to ? "text-[12px] md:text-[18px] lg:text-[22px] underline font-bold text-purple-500 hover:text-purple-900" : "text-[15px] md:text-[18px] lg:text-[22px] hover:underline"}
             >
               {link.pathName}
             </Link>
