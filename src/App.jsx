@@ -18,6 +18,8 @@ import { Suspense } from "react";
 import FallBackLoader from "./Components/Loader";
 import AboutPage from "./Pages/About"
 import ContactPage from "./Pages/Contact"
+import TicketPage from "./Pages/TicketPage"
+import TicketDetails from "./Pages/TicketDetails"
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
         <Route path="/createEvent" element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
         <Route path="/your-events" element={<ProtectedRoute><YourEventsPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/tickets" element={<ProtectedRoute><TicketPage /></ProtectedRoute>} />
+        <Route path="/ticket/:ticketId" element={<ProtectedRoute><TicketDetails /></ProtectedRoute>} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />

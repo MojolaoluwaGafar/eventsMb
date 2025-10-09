@@ -58,12 +58,12 @@ export default function Profile() {
                 </div>
               )}
 
-              <button
+              {/* <button
                 aria-label="Edit profile picture"
                 className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-md text-gray-500 hover:text-[#9747FF]"
               >
                 <IoPencil size={10} />
-              </button>
+              </button> */}
             </div>
 
             <div className="flex flex-col">
@@ -88,11 +88,11 @@ export default function Profile() {
             </div>
             <hr className="border-gray-300" />
 
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <span className="text-gray-700">Password</span>
               <span className="font-medium text-purple-800">**********</span>
             </div>
-            <hr className="border-gray-300" />
+            <hr className="border-gray-300" /> */}
 
             <div className="flex justify-between">
               <span className="text-gray-700">Events hosted</span>

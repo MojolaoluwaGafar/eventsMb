@@ -114,7 +114,7 @@ export default function SignInPage() {
             {errors.general && <span className="text-red-700 font-semibold">{errors.general}</span>}
 
             {isLoading ? <Button type="submit" content="Signing In" className="mt-3" /> : <Button type="submit" content="Sign In" className="mt-3" /> }
-            <button type="submit" onClick={googleLogin} className="border-1 border-black lg:w-[448px] rounded-md mt-3 flex items-center justify-center h-[40px] gap-2">Sign up with<span className="font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-transparent bg-clip-text"><FcGoogle size={20} /></span></button>
+            <button type="submit" onClick={googleLogin} className="border-1 border-black lg:w-[448px] rounded-md mt-3 flex items-center justify-center h-[40px] gap-2">Sign in with<span className="font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-transparent bg-clip-text"><FcGoogle size={20} /></span></button>
             <p className="pt-2 font-bold">Dont have an account? <Link to="/auth/signUp"><span className="text-purple-500">Sign up</span></Link></p>
            </form>
 

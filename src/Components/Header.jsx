@@ -41,18 +41,18 @@ export default function Header() {
       to: "/profile",
       icon: <LuUserRoundPen className="text-dark" />,
     },
-    {
-      id: 3,
-      content : "Settings",
-      to: "/coming-soon",
-      icon: <FiSettings className="text-dark" />,
-    },
-    {
-      id: 4,
-      content : "help",
-      to: "/coming-soon",
-      icon: <MdOutlineHelpOutline />,
-    }
+    // {
+    //   id: 3,
+    //   content : "Settings",
+    //   to: "/coming-soon",
+    //   icon: <FiSettings className="text-dark" />,
+    // },
+    // {
+    //   id: 4,
+    //   content : "help",
+    //   to: "/coming-soon",
+    //   icon: <MdOutlineHelpOutline />,
+    // }
     // {
     //   id : 3,
     //   content : "About",

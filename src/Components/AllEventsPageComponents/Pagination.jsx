@@ -2,8 +2,10 @@ import React from 'react';
 
 export default function Pagination({ currentPage, totalPages, onPrevious, onNext }) {
   return (
-    <nav className="flex justify-between items-center px-5 lg:px-20 pb-5" aria-label="Pagination">
-      <button
+    <nav className="flex items-center py-5 px-8 lg:px-20" aria-label="Pagination">
+     <div className="container mx-auto justify-between">
+       <div className="flex justify-between items-center">
+         <button
         onClick={onPrevious}
         disabled={currentPage === 1}
         className="w-[100px] font-bold border-2 rounded-md py-2 px-2 h-[50px] hover:bg-purple-500 hover:border-0 hover:text-white"
@@ -22,6 +24,8 @@ export default function Pagination({ currentPage, totalPages, onPrevious, onNext
       >
         Next
       </button>
+       </div>
+     </div>
     </nav>
   );
 }

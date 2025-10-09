@@ -6,13 +6,16 @@ import { AuthProvider } from "../src/Context/AuthContext"
 import { ToastContainer } from "react-toastify";
 import { EventProvider } from "./Context/EventContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { TicketsProvider } from "./Context/TicketContext";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <AuthProvider>
       <EventProvider>
-         <App />
+         <TicketsProvider>
+          <App />
+         </TicketsProvider>
       </EventProvider>
       <ToastContainer />
     </AuthProvider>
