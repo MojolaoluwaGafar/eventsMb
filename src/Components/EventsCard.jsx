@@ -29,7 +29,7 @@ export default function EventsCard({
   const regularCount = Number(regular) || 0;
 
   return (
-    <Link to={`/event/${id}`} className="text-gray-900 mx-auto my-4 w-full shadow-xl">
+    <Link to={`/event/${id}`} className="text-gray-900 mx-auto my-4 w-full">
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
